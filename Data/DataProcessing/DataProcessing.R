@@ -25,7 +25,7 @@ for (i in 1:N) {
   }
   
   #read image
-  img <- image_read(paste0("DataProcessing/scene00",num,".png"))
+  img <- image_read(paste0("~/Data/scene00",num,".png"))
   img_df <- grid.to.xyz(as.matrix(as.raster(img)))
   img_df <- img_df %>% filter(z != "#000000ff") #remove black background
   
@@ -52,9 +52,9 @@ for (i in 1:N) {
 }
 
 FUCCI_Data <- img_df2
-InitPos <- read_excel("FUCCI_DATA_ImageJ.xlsx", sheet = "InitPos")
-FinalPos <- read_excel("FUCCI_DATA_ImageJ.xlsx", sheet = "FinalPos")
-CellTracking <- read_excel("FUCCI_DATA_ImageJ.xlsx", sheet = "CellTracking")
+InitPos <- read_excel("~/Data/FUCCI_DATA_ImageJ.xlsx", sheet = "InitPos")
+FinalPos <- read_excel("~/Data/FUCCI_DATA_ImageJ.xlsx", sheet = "FinalPos")
+CellTracking <- read_excel("~/Data/FUCCI_DATA_ImageJ.xlsx", sheet = "CellTracking")
 
 InitPos_color <- 
   InitPos %>% 
