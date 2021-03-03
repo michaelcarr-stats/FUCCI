@@ -1,4 +1,4 @@
-GenerateSummaryStatistics <- function(data, CellTracking = TRUE){
+GenerateSummaryStatistics <- function(data, CellTracking = TRUE, Xmax){
   
   if (CellTracking){
     
