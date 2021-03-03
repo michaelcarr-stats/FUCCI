@@ -1,4 +1,4 @@
-InitialMotilitySelect <- function(ntrack, delta, InitialL, domain, domain_x, domain_y, Xmax, Ymax) {
+InitialMotilitySelect <- function(ntrack, domain, domain_x, Xmaxx) {
   
   Index <- matrix(1:prod(dim(domain)),dim(domain)) #index position of ith site
   Index[domain != 1] <- NA #identify red cells
