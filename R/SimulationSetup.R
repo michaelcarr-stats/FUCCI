@@ -36,7 +36,7 @@ SimulationSetup<- function(ntrack, Xmax, Ymax, InitPos = NULL, CellTrackingData 
     percentIS <- matrix(c(percentR,percentY,percentG), nrow = 3, ncol = 1)
     domain <- InitDomain(domain_x, rowNum, columnNum, Xmax, InitialL, InitialDensity, percentIS)
     
-    TrackedCells <- InitialMotilitySelect(ntrack, delta, InitialL, domain, domain_x, domain_y, Xmax, Ymax)
+    TrackedCells <- InitialMotilitySelect(ntrack, domain, domain_x, Xmax)
     
     RowPosCell = TrackedCells$RowPosCell
     ColPosCell = TrackedCells$ColPosCell
@@ -70,7 +70,7 @@ SimulationSetup<- function(ntrack, Xmax, Ymax, InitPos = NULL, CellTrackingData 
     
     # Cell Tracking
     if (is.null(CellTrackingData)) {
-      TrackedCells <- InitialMotilitySelect(ntrack, delta, InitialL, domain, domain_x, domain_y, Xmax, Ymax)
+      TrackedCells <- InitialMotilitySelect(ntrack, domain, domain_x, Xmax)
       
       RowPosCell = TrackedCells$RowPosCell
       ColPosCell = TrackedCells$ColPosCell
