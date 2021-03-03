@@ -11,9 +11,10 @@ This folder contains `DataProcessing.R` use to merge the ImageJ data and the exp
 order to retrieve the cell phase identity which was lost when using ImageJ. The output of this function
 is a xlsx file named with sheets:
 
-	- InitPos, with variables: x, y and color; where x and y are the cartesian coordinates and color is the cell cycle indicator
-	- FinalPos, with variables: x, y and color; where x and y are the cartesian coordinates and color is the cell cycle indicator
-	- CellTracking: , with variables: x, y, color, ntrack, frame; where x and y are the cartesian coordinates, color is the cell cycle indicator, ntrack is the cell trajectory identifier and frame is the image in the sequence.
+- InitPos, with variables: x, y and color; where x and y are the cartesian coordinates and color is the cell cycle indicator
+- FinalPos, with variables: x, y and color; where x and y are the cartesian coordinates and color is the cell cycle indicator
+- CellTracking: , with variables: x, y, color, ntrack, frame; where x and y are the cartesian coordinates, 
+  color is the cell cycle indicator, ntrack is the cell trajectory identifier and frame is the image in the sequence.
 
 
 # References
