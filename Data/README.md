@@ -1,6 +1,6 @@
 # Data
 
-This folder contains the mp4 file of a FUCCI scratch assay experiment taken with permission from
+This folder contains the mp4 file `FUCCI_WM983c Time Lapse.mp4` of a FUCCI scratch assay experiment taken with permission from
 Vittadello et al. (2018). This video file has been converted into individual frames for proccessing in R
 and ImageJ. The Data proccessed in ImageJ including cell trajectory data, initial position and final position
 data has been retrieved and placed in FUCCI_DATA_ImageJ.xlsx.
