@@ -37,7 +37,7 @@ Ymax <- 1745.35 #image height
 
 SetupVars <- SimulationSetup(Ntrack, Xmax, Ymax, InitPos = NULL, CellTrackingData = NULL); # initialise simulation environment
 data <- Main_Simulate(theta,SetupVars,T_record = 48, CellTracking)
-sy <- GenerateSummaryStatistics(data, CellTracking)
+sy <- GenerateSummaryStatistics(data, CellTracking, Xmax)
 
 #known parameter values
 MotilityConstant <- 0 # 0 if transition parameters are held constant, 1 if it is motility
@@ -89,7 +89,7 @@ Samples <-
           next #reject proposal
         }
         
-        sx <- GenerateSummaryStatistics(data, CellTracking)[1:3]
+        sx <- GenerateSummaryStatistics(data, CellTracking, Xmax)[1:3]
         
       } else {
         data <- Main_Simulate(c(KnownTheta, theta),SetupVars,T_record, CellTracking)
@@ -98,7 +98,7 @@ Samples <-
           next #reject proposal
         }
         
-        sx <- GenerateSummaryStatistics(data, CellTracking)[-c(1:3)]
+        sx <- GenerateSummaryStatistics(data, CellTracking, Xmax)[-c(1:3)]
       }
       
       if (any(is.na(sx))) {
@@ -159,7 +159,7 @@ while (p_accept > pacc_target && tolmax > tol_target) {
             next #reject proposal
           }
           
-          sx_prop <- GenerateSummaryStatistics(data, CellTracking)[1:3]
+          sx_prop <- GenerateSummaryStatistics(data, CellTracking, Xmax)[1:3]
           
         } else {
           data <- Main_Simulate(c(KnownTheta, theta_prop),SetupVars,T_record,CellTracking)
@@ -168,7 +168,7 @@ while (p_accept > pacc_target && tolmax > tol_target) {
             next #reject proposal
           }
           
-          sx_prop <- GenerateSummaryStatistics(data, CellTracking)[-c(1:3)]
+          sx_prop <- GenerateSummaryStatistics(data, CellTracking, Xmax)[-c(1:3)]
         }
         
         if (any(is.na(sx_prop))) {
@@ -217,7 +217,7 @@ while (p_accept > pacc_target && tolmax > tol_target) {
             next #reject proposal
           }
           
-          sx_prop <- GenerateSummaryStatistics(data, CellTracking)[1:3]
+          sx_prop <- GenerateSummaryStatistics(data, CellTracking, Xmax)[1:3]
           
         } else {
           data <- Main_Simulate(c(KnownTheta, theta_prop),SetupVars,T_record, CellTracking)
@@ -226,7 +226,7 @@ while (p_accept > pacc_target && tolmax > tol_target) {
             next #reject proposal
           }
           
-          sx_prop <- GenerateSummaryStatistics(data, CellTracking)[-c(1:3)]
+          sx_prop <- GenerateSummaryStatistics(data, CellTracking, Xmax)[-c(1:3)]
         }
         
         if (any(is.na(sx_prop))) {
