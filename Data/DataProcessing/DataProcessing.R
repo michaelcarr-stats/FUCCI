@@ -96,8 +96,5 @@ for (i in 1:nrow(CellTracking_color)){
 InitPos_color <- InitPos_color %>% mutate(x = x*x_scale, y = y*y_scale)
 FinalPos_color <- FinalPos_color %>% mutate(x = x*x_scale, y = y*y_scale)
 CellTracking_color <- CellTracking_color %>% mutate(x = x*x_scale, y = y*y_scale)
-FUCCI_DATA <- FUCCI_DATA %>% mutate(x = x*x_scale, y = y*y_scale)
 
-FUCCI_DATA <- FUCCI_DATA %>% as_tibble() %>% filter(frame == 1 | frame == 110)
-
-write_xlsx(list(InitPos = InitPos_color, FinalPos = FinalPos_color, CellTracking = CellTracking_color, FUCCI_DATA = FUCCI_DATA), "FUCCI_proccessed.xlsx")
+write_xlsx(list(InitPos = InitPos_color, FinalPos = FinalPos_color, CellTracking = CellTracking_color), "FUCCI_proccessed.xlsx")
