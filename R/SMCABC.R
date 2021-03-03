@@ -164,7 +164,7 @@ Samples <-
         next #reject proposal
       }
       
-      sx <- GenerateSummaryStatistics(data, CellTracking)
+      sx <- GenerateSummaryStatistics(data, CellTracking, Xmax)
       
       if (any(is.na(sx))) {
         next #reject proposal
@@ -218,7 +218,7 @@ while (p_accept > pacc_target && tolmax > tol_target) {
           next
         }
         
-        sx_prop <- GenerateSummaryStatistics(data, CellTracking)
+        sx_prop <- GenerateSummaryStatistics(data, CellTracking, Xmax)
         
         if (any(is.na(sx_prop))) {
           next
@@ -265,7 +265,7 @@ while (p_accept > pacc_target && tolmax > tol_target) {
           next
         }
         
-        sx_prop <- GenerateSummaryStatistics(data, CellTracking)
+        sx_prop <- GenerateSummaryStatistics(data, CellTracking , Xmax)
         
         if (any(is.na(sx_prop))) {
           next
