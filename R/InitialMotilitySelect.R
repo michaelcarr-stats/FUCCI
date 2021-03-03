@@ -9,7 +9,7 @@ InitialMotilitySelect <- function(ntrack, delta, InitialL, domain, domain_x, dom
   IndexLHS <- Index[order(Index[, 2], decreasing = TRUE) & Index[,3] == 1,]
   IndexRHS <- Index[order(Index[, 2], decreasing = FALSE) & Index[,3] == 0,]
 
-  CellSelectedIndex <- c(IndexLHS[1:ntrack/2,1], IndexRHS[1:ntrack/2,1])
+  CellSelectedIndex <- c(IndexLHS[1:ceiling(ntrack/2),1], IndexRHS[1:ceiling(ntrack/2),1])[1:ntrack]
   RowPosCell <- ((CellSelectedIndex - 1) %% nrow(domain)) + 1
   ColPosCell <- ceiling(CellSelectedIndex/nrow(domain))
   
