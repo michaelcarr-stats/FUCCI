@@ -95,7 +95,7 @@ Rcpp::List Main_Simulate(arma::vec theta, Rcpp::List SetupVars, double T_record,
 
       //red Migration  
       if (R <= ar/a0) {
-        MatchedIndicies = MatchedIndicies = find(domain == 1);
+        MatchedIndicies = find(domain == 1);
         Index = Rcpp::as<int>(Rcpp::sample(MatchedIndicies.n_elem,1,false))-1; // chosen cell row index
         rowIndex = MatchedIndicies(Index) % rowNum;
         columnIndex = floor(MatchedIndicies(Index)/rowNum);
@@ -117,7 +117,7 @@ Rcpp::List Main_Simulate(arma::vec theta, Rcpp::List SetupVars, double T_record,
         
         //Yellow Migration
       } else if (R > ar/a0 && R <= (ay + ar)/a0) {
-        MatchedIndicies = MatchedIndicies = find(domain == 2);
+        MatchedIndicies = find(domain == 2);
         Index = Rcpp::as<int>(Rcpp::sample(MatchedIndicies.n_elem,1,false))-1; // chosen cell row index
         rowIndex = MatchedIndicies(Index) % rowNum;
         columnIndex = floor(MatchedIndicies(Index)/rowNum);
@@ -139,7 +139,7 @@ Rcpp::List Main_Simulate(arma::vec theta, Rcpp::List SetupVars, double T_record,
         
         //Green Migration
       } else if (R > (ar + ay)/a0 && R <= (ar + ay + ag)/a0) {
-        MatchedIndicies = MatchedIndicies = find(domain == 3);
+        MatchedIndicies = find(domain == 3);
         Index = Rcpp::as<int>(Rcpp::sample(MatchedIndicies.n_elem,1,false))-1; // chosen cell row index
         rowIndex = MatchedIndicies(Index) % rowNum;
         columnIndex = floor(MatchedIndicies(Index)/rowNum);
@@ -161,7 +161,7 @@ Rcpp::List Main_Simulate(arma::vec theta, Rcpp::List SetupVars, double T_record,
         
         //Transition Red to Yellow
       } else if (R > (ar + ay + ag)/a0 && R <= (ar + ay + ag + tr)/a0) {
-        MatchedIndicies = MatchedIndicies = find(domain == 1);
+        MatchedIndicies = find(domain == 1);
         Index = Rcpp::as<int>(Rcpp::sample(MatchedIndicies.n_elem,1,false))-1; // chosen cell row index
         rowIndex = MatchedIndicies(Index) % rowNum;
         columnIndex = floor(MatchedIndicies(Index)/rowNum);
@@ -173,7 +173,7 @@ Rcpp::List Main_Simulate(arma::vec theta, Rcpp::List SetupVars, double T_record,
         
         //Transition Yellow to Green
       } else if (R > (ar + ay + ag + tr)/a0 && R <= (ar + ay + ag + tr + ty)/a0) {
-        MatchedIndicies = MatchedIndicies = find(domain == 2);
+        MatchedIndicies = find(domain == 2);
         Index = Rcpp::as<int>(Rcpp::sample(MatchedIndicies.n_elem,1,false)) - 1; // chosen cell index
         rowIndex = MatchedIndicies(Index) % rowNum;
         columnIndex = floor(MatchedIndicies(Index)/rowNum);
@@ -185,7 +185,7 @@ Rcpp::List Main_Simulate(arma::vec theta, Rcpp::List SetupVars, double T_record,
         
         //Transition Green to Red
       } else if (R > (ar + ay + ag + tr + ty)/ a0 && R <= (ar + ay + ag + tr + ty + tg)/a0) {
-        MatchedIndicies = MatchedIndicies = find(domain == 3);
+        MatchedIndicies = find(domain == 3);
         Index = Rcpp::as<int>(Rcpp::sample(MatchedIndicies.n_elem,1,false))-1; // chosen cell row index
         rowIndex = MatchedIndicies(Index) % rowNum;
         columnIndex = floor(MatchedIndicies(Index)/rowNum);
