@@ -111,9 +111,6 @@ Rcpp::List GenerateSummaryStatData(bool &CellTracking, Rcpp::List &SummaryStatsD
               green_distance(simuIndex - 1, cellID) += delta;
             }
           }
-  
-          RowPosCell(cellID) = MigPosition(0);
-          ColPosCell(cellID) = MigPosition(1);
         }
       }
     }
