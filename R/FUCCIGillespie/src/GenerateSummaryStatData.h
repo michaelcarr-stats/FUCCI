@@ -4,7 +4,7 @@
 // [[Rcpp::depends(RcppArmadillo)]]
 using namespace arma; 
 
-Rcpp::List GenerateSummaryStatData(bool &CellTracking, Rcpp::List &SummaryStatsData, int &ntrack, double &T_record, double &t, int &Nred, int &Nyellow, int &Ngreen, ivec &RowPosCell, ivec &ColPosCell, ivec &CellSelected, ivec &CellSelectedStart, ivec &MigPosition, int &rowIndex, int &columnIndex, bool &migFailed, int &transID, double &delta, int &simuIndex, int &simuNum, imat &domain, mat &domain_x) {
+Rcpp::List GenerateSummaryStatData(bool &CellTracking, Rcpp::List &SummaryStatsData, int &ntrack, double &T_record, double &t, int &Nred, int &Nyellow, int &Ngreen, ivec &RowPosCell, ivec &ColPosCell, ivec &CellSelected, ivec &CellSelectedStart, int &rowIndex, int &columnIndex, bool &migFailed, int &transID, double &delta, int &simuIndex, int &simuNum, imat &domain, mat &domain_x) {
   
   if (CellTracking) {
   
