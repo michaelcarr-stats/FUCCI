@@ -82,26 +82,22 @@ Rcpp::List GenerateSummaryStatData(bool &CellTracking, Rcpp::List &SummaryStatsD
               if (red_time(simuIndex - 1, cellID) == 0) { //ensure not overiding first phase
                 red_time(simuIndex - 1, cellID) = T_record - t; //assign next phase duration based on termination time - to be overriden
                 phasestart_time(simuIndex - 1, cellID) = t;
-                CellSelected(cellID) = transID;
               }
             } else if (transID == 2) {
               red_time(simuIndex - 1, cellID) = t - phasestart_time(simuIndex - 1, cellID); //calculate phase duration 
               if (yellow_time(simuIndex - 1, cellID) == 0) { //ensure not overiding first phase
                 yellow_time(simuIndex - 1, cellID) = T_record - t; //assign next phase duration based on termination time - to be overriden
                 phasestart_time(simuIndex - 1, cellID) = t;
-                CellSelected(cellID) = transID;
               }
             } else if (transID == 3) {
               yellow_time(simuIndex - 1, cellID) = t - phasestart_time(simuIndex - 1, cellID); //calculate phase duration 
               if (green_time(simuIndex - 1, cellID) == 0) { //ensure not overiding first phase
                 green_time(simuIndex - 1, cellID) = T_record - t; //assign next phase duration based on termination time - to be overriden
                 phasestart_time(simuIndex - 1, cellID) = t;
-                CellSelected(cellID) = transID;
               }
             }
           }
-  
-          if (CellSelected(cellID) == CellSelectedStart(cellID)){
+          if (transID == CellSelectedStart(cellID)){
             TrackingCompleted(simuIndex - 1, cellID) = 1;
           }
   
