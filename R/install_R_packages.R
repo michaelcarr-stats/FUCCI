@@ -8,5 +8,5 @@ for (package in r_packages_list){
 
 #install simulation model from github
 if (!("FUCCIGillespie" %in% installed.packages()[,"Package"])){
-  devtools::install_github("michaelcarr-stats/FUCCI/FUCCIGillespie", lib = "~/R/library")  
+  devtools::install_github("michaelcarr-stats/FUCCI/R/FUCCIGillespie", lib = "~/R/library")  
 }
