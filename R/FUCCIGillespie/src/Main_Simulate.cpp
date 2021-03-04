@@ -213,9 +213,9 @@ Rcpp::List Main_Simulate(arma::vec theta, Rcpp::List SetupVars, double T_record,
       
       SummaryStatsData = GenerateSummaryStatData(CellTracking, SummaryStatsData, ntrack, T_record, t, Nred, Nyellow, Ngreen, RowPosCell, ColPosCell, CellSelected, CellSelectedStart, MigPosition, rowIndex, columnIndex, migFailed, transID, delta, simuIndex, simuNum, domain, domain_x);
       
-      if (!migFailed && SummaryStatsData["cellID"] != -1) {
-        RowPosCell(SummaryStatsData["cellID"]) = MigPosition(0); //update location of tracked cells
-        ColPosCell(SummaryStatsData["cellID"]) = MigPosition(1); //update location of tracked cells
+      if (!migFailed && (int) SummaryStatsData["cellID"] != -1) {
+        RowPosCell((int) SummaryStatsData["cellID"]) = MigPosition(0); //update location of tracked cells
+        ColPosCell((int) SummaryStatsData["cellID"]) = MigPosition(1); //update location of tracked cells
       }
       
       //reset transition/migration indicators
