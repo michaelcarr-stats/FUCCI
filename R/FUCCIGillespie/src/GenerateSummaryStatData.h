@@ -23,7 +23,7 @@ Rcpp::List GenerateSummaryStatData(bool &CellTracking, Rcpp::List &SummaryStatsD
       Rcpp::NumericMatrix green_time(simuNum,ntrack); //time spent in green phase for tracked cells
       mat phasestart_time(simuNum,ntrack); //time which previous phases ended - initially 0
       imat TrackingCompleted(simuNum,ntrack,fill::zeros); //Indicates whether cell cycle has be completed
-      int cellID = -1; //ID of tracked cells 0:(ntrack-1)
+      int cellID; //ID of tracked cells 0:(ntrack-1)
       
       SummaryStatsData = Rcpp::List::create(
         Rcpp::Named("Nred_ss") = Nred_ss,
@@ -36,8 +36,8 @@ Rcpp::List GenerateSummaryStatData(bool &CellTracking, Rcpp::List &SummaryStatsD
         Rcpp::Named("yellow_time") = yellow_time,
         Rcpp::Named("green_time") = green_time,
         Rcpp::Named("phasestart_time") = phasestart_time,
-        Rcpp::Named("TrackingCompleted") = TrackingCompleted
-        Rcpp::Named("cellID") = cellID; 
+        Rcpp::Named("TrackingCompleted") = TrackingCompleted,
+        Rcpp::Named("cellID") = cellID
       );
     } 
     
