@@ -217,7 +217,7 @@ Rcpp::List Main_Simulate(arma::vec theta, Rcpp::List SetupVars, double T_record,
         RowPosCell((int) SummaryStatsData["cellID"]) = MigPosition(0); //update location of tracked cells
         ColPosCell((int) SummaryStatsData["cellID"]) = MigPosition(1); //update location of tracked cells
       } else if (transID != 0 && (int) SummaryStatsData["cellID"] != -1) {
-        CellSelected((int) SummaryStatsData["cellID"]) = transID
+        CellSelected((int) SummaryStatsData["cellID"]) = transID //update cell ID
       }
       
       //reset transition/migration indicators
