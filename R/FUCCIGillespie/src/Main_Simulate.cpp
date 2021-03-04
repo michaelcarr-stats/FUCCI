@@ -211,7 +211,7 @@ Rcpp::List Main_Simulate(arma::vec theta, Rcpp::List SetupVars, double T_record,
         }
       }
       
-      SummaryStatsData = GenerateSummaryStatData(CellTracking, SummaryStatsData, ntrack, T_record, t, Nred, Nyellow, Ngreen, RowPosCell, ColPosCell, CellSelected, CellSelectedStart, MigPosition, rowIndex, columnIndex, migFailed, transID, delta, simuIndex, simuNum, domain, domain_x);
+      SummaryStatsData = GenerateSummaryStatData(CellTracking, SummaryStatsData, ntrack, T_record, t, Nred, Nyellow, Ngreen, RowPosCell, ColPosCell, CellSelected, CellSelectedStart, rowIndex, columnIndex, migFailed, transID, delta, simuIndex, simuNum, domain, domain_x);
       
       if (!migFailed && (int) SummaryStatsData["cellID"] != -1) {
         RowPosCell((int) SummaryStatsData["cellID"]) = MigPosition(0); //update location of tracked cells
