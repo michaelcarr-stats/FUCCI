@@ -23,6 +23,7 @@ Rcpp::List GenerateSummaryStatData(bool &CellTracking, Rcpp::List &SummaryStatsD
       Rcpp::NumericMatrix green_time(simuNum,ntrack); //time spent in green phase for tracked cells
       mat phasestart_time(simuNum,ntrack); //time which previous phases ended - initially 0
       imat TrackingCompleted(simuNum,ntrack,fill::zeros); //Indicates whether cell cycle has be completed
+      int cellID = -1; //ID of tracked cells 0:(ntrack-1)
       
       SummaryStatsData = Rcpp::List::create(
         Rcpp::Named("Nred_ss") = Nred_ss,
@@ -36,6 +37,7 @@ Rcpp::List GenerateSummaryStatData(bool &CellTracking, Rcpp::List &SummaryStatsD
         Rcpp::Named("green_time") = green_time,
         Rcpp::Named("phasestart_time") = phasestart_time,
         Rcpp::Named("TrackingCompleted") = TrackingCompleted
+        Rcpp::Named("cellID") = cellID; 
       );
     } 
     
@@ -54,6 +56,9 @@ Rcpp::List GenerateSummaryStatData(bool &CellTracking, Rcpp::List &SummaryStatsD
     mat phasestart_time = SummaryStatsData["phasestart_time"];
     imat TrackingCompleted = SummaryStatsData["TrackingCompleted"];
     
+    SummaryStatsData["cellID"] = -1;
+    int cellID = SummaryStatsData["cellID"];
+    
     //Record Summary Statistics
     if (t >= T_record - 1) {
       Nred_ss(simuIndex - 1) = Nred;
@@ -61,7 +66,6 @@ Rcpp::List GenerateSummaryStatData(bool &CellTracking, Rcpp::List &SummaryStatsD
       Ngreen_ss(simuIndex - 1) = Ngreen;
     }
   
-    int cellID = -1; //ID of tracked cells 0:ntrack-1
     if (!migFailed || transID != 0) {
       for (int i = 0; i < ntrack; i++) {    
         if (RowPosCell(i) == rowIndex && ColPosCell(i) == columnIndex) { //determine which tracked cell moved/transitioned
@@ -129,6 +133,7 @@ Rcpp::List GenerateSummaryStatData(bool &CellTracking, Rcpp::List &SummaryStatsD
     SummaryStatsData["green_time"] = green_time;
     SummaryStatsData["phasestart_time"] = phasestart_time;
     SummaryStatsData["TrackingCompleted"] = TrackingCompleted;
+    SummaryStatsData["cellID"] = cellID;
   
   } else {
 
