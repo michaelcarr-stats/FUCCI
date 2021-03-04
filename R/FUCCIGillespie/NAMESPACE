@@ -1,4 +1,4 @@
 useDynLib(FUCCIGillespie, .registration=TRUE)
-export("Rcpp.fake.fun")
+export("Main_Simulate")
 importFrom(Rcpp, evalCpp)
 exportPattern("^[[:alpha:]]+")
