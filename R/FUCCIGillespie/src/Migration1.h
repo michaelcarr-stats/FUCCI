@@ -9,6 +9,19 @@ ivec Migration1(int &rowIndex, int &columnIndex, int &rowNum, int &columnNum, in
     int MigColumn = columnIndex;
     double P = R::runif(0,1);
     
+    /*
+    Target Sites arround lattice site L.
+       ___  ___
+      / 3 \/ 5 \
+      \___/\___/__
+    / 1 \/ L \/ 2 \
+    \___/\___/\___/ 
+      / 4 \/ 6 \
+      \___/\___/
+
+    */
+    
+    
     if (BC == 1) {
         if (P < 1.0 / 6.0) { //Target site 1
             if (columnIndex == 0) {
