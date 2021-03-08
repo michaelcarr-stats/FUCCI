@@ -9,15 +9,15 @@ ivec Migration1(int &rowIndex, int &columnIndex, int &rowNum, int &columnNum, in
     int MigColumn = columnIndex;
     double P = R::runif(0,1);
     
-    /*
+        /*
     Target Sites arround lattice site L.
-       ___  ___
-      / 3 \/ 5 \
-      \___/\___/__
-    / 1 \/ L \/ 2 \
-    \___/\___/\___/ 
-      / 4 \/ 6 \
-      \___/\___/
+       ___  ___              _______
+      / 3 \/ 5 \            | 3 | 5 |
+      \___/\___/__          |___|___|___
+    / 1 \/ L \/ 2 \    =>   | 1 | L | 2 |
+    \___/\___/\___/         |___|___|___|
+      / 4 \/ 6 \            | 4 | 6 |
+      \___/\___/            |___|___|
 
     */
     
