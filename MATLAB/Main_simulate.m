@@ -12,7 +12,7 @@
     Ymax = s.Ymax; %heigth of domain
     columnNum = s.columnNum; %Corresponding total column nodes
     rowNum = s.rowNum; %Corresponding total row nodes
-    BC = s.BC; %Boundary condition
+    BC = s.BC; %Boundary condition: 1.Periodic; 2.No flux
     domain_x = s.domain_x; %x coordinates for all the nodes
     domain_y = s.domain_y; %y coordinates for all the nodes
     domain = s.domain;
