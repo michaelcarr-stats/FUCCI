@@ -1,8 +1,7 @@
-function [MigRow, MigColumn] = Migration1(rowIndex,columnIndex,rowNum,columnNum)
+function [MigRow, MigColumn] = Migration1(rowIndex,columnIndex,rowNum,columnNum,BC)
 MigRow = rowIndex; %Preassign the rwo index as the current row
 MigColumn = columnIndex; %Preassign the column index as the current column
 P = rand; %Genearte a random number between 0 and 1
-BC = 2; %Boundary condition: 1.Periodic; 2.No flux
 if BC==1
     if P<1/6 %Target site 1
         if rowIndex==1
