@@ -44,7 +44,7 @@ ivec Migration1(int &rowIndex, int &columnIndex, int &rowNum, int &columnNum, in
                 MigRow = rowNum - 1;
             }
             else {
-                MigRow = rowIndex + 1;
+                MigRow = rowIndex - 1;
             }
             if (columnIndex == 0) {
                 MigColumn = columnNum - 1;
