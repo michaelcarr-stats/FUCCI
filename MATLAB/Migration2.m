@@ -2,6 +2,19 @@ function [MigRow, MigColumn] = Migration2(rowIndex,columnIndex,rowNum,columnNum,
 MigRow = rowIndex; %Preassign the rwo index as the current row
 MigColumn = columnIndex; %Preassign the column index as the current column
 P = rand; %Genearte a random number between 0 and 1
+
+%{
+Target Sites arround lattice site L.
+   ___  ___
+  / 3 \/ 5 \
+  \___/\___/__
+/ 1 \/ L \/ 2 \
+\___/\___/\___/ 
+  / 4 \/ 6 \
+  \___/\___/
+
+%}
+
 if BC==1
     if P<1/6 %Target site 1
         if rowIndex==1
