@@ -86,7 +86,7 @@
                 rowIndex = rowIndexs(Index); %assign rowIndex to corresponding location
                 columnIndex = columnIndexs(Index); %assign columnIndex to corresponding location 
                 if rem(rowNum-rowIndex,2)==0 %If the selected agent is at bottom/(bottom-2)/(bottom-4)/... rows
-                    [migPosition(1), migPosition(2)] = Migration1(rowIndex,columnIndex,rowNum,columnNum);
+                    [migPosition(1), migPosition(2)] = Migration1(rowIndex,columnIndex,rowNum,columnNum,BC);
                     if domain(migPosition(1),migPosition(2))==0 && ...%Check (1)if the target site is vacant; (2)if the target site is within the actual domain
                             domain_x(migPosition(1),migPosition(2))<=Xmax && ...
                             domain_y(migPosition(1),migPosition(2))<=Ymax
@@ -95,7 +95,7 @@
                         migFailed = false;
                     end
                 else %If the selected agent is at (bottom-1)/(bottom-3)/(bottom-5)/... rows
-                    [migPosition(1), migPosition(2)] = Migration2(rowIndex,columnIndex,rowNum,columnNum);
+                    [migPosition(1), migPosition(2)] = Migration2(rowIndex,columnIndex,rowNum,columnNum,BC);
                     if domain(migPosition(1),migPosition(2))==0 && ...%Check (1)if the target site is vacant; (2)if the target site is within the actual domain
                             domain_x(migPosition(1),migPosition(2))<=Xmax && ...
                             domain_y(migPosition(1),migPosition(2))<=Ymax
@@ -112,7 +112,7 @@
                 rowIndex = rowIndexs(Index); %assign rowIndex to corresponding location
                 columnIndex = columnIndexs(Index); %assign columnIndex to corresponding location 
                 if rem(rowNum-rowIndex,2)==0  %If the selected agent is at bottom/(bottom-2)/(bottom-4)/... rows
-                    [migPosition(1), migPosition(2)] = Migration1(rowIndex,columnIndex,rowNum,columnNum);
+                    [migPosition(1), migPosition(2)] = Migration1(rowIndex,columnIndex,rowNum,columnNum,BC);
                     if domain(migPosition(1),migPosition(2))==0 && ...%Check (1)if the target site is vacant; (2)if the target site is within the actual domain
                             domain_x(migPosition(1),migPosition(2))<=Xmax && ...
                             domain_y(migPosition(1),migPosition(2))<=Ymax
@@ -121,7 +121,7 @@
                         migFailed = false;
                     end
                 else %If the selected agent is at (bottom-1)/(bottom-3)/(bottom-5)/... rows
-                    [migPosition(1), migPosition(2)] = Migration2(rowIndex,columnIndex,rowNum,columnNum);
+                    [migPosition(1), migPosition(2)] = Migration2(rowIndex,columnIndex,rowNum,columnNum,BC);
                     if domain(migPosition(1),migPosition(2))==0 && ...%Check (1)if the target site is vacant; (2)if the target site is within the actual domain
                             domain_x(migPosition(1),migPosition(2))<=Xmax && ...
                             domain_y(migPosition(1),migPosition(2))<=Ymax
@@ -138,7 +138,7 @@
                 rowIndex = rowIndexs(Index); %assign rowIndex to corresponding location
                 columnIndex = columnIndexs(Index); %assign columnIndex to corresponding location 
                 if rem(rowNum-rowIndex,2)==0  %If the selected agent is at bottom/(bottom-2)/(bottom-4)/... rows
-                    [migPosition(1), migPosition(2)] = Migration1(rowIndex,columnIndex,rowNum,columnNum);
+                    [migPosition(1), migPosition(2)] = Migration1(rowIndex,columnIndex,rowNum,columnNum,BC);
                     if domain(migPosition(1),migPosition(2))==0 && ...%Check (1)if the target site is vacant; (2)if the target site is within the actual domain
                             domain_x(migPosition(1),migPosition(2))<=Xmax && ...
                             domain_y(migPosition(1),migPosition(2))<=Ymax
@@ -147,7 +147,7 @@
                         migFailed = false;
                     end
                 else %If the selected agent is at (bottom-1)/(bottom-3)/(bottom-5)/... rows
-                    [migPosition(1), migPosition(2)] = Migration2(rowIndex,columnIndex,rowNum,columnNum);
+                    [migPosition(1), migPosition(2)] = Migration2(rowIndex,columnIndex,rowNum,columnNum,BC);
                     if domain(migPosition(1),migPosition(2))==0 && ...%Check (1)if the target site is vacant; (2)if the target site is within the actual domain
                             domain_x(migPosition(1),migPosition(2))<=Xmax && ...
                             domain_y(migPosition(1),migPosition(2))<=Ymax
@@ -190,7 +190,7 @@
                                 
                 % move the daughter cell to the new position
                 if rem(rowNum-rowIndex,2)==0  %If the selected agent is at bottom/(bottom-2)/(bottom-4)/... rows
-                    [migPosition(1), migPosition(2)] = Migration1(rowIndex,columnIndex,rowNum,columnNum);
+                    [migPosition(1), migPosition(2)] = Migration1(rowIndex,columnIndex,rowNum,columnNum,BC);
                     if domain(migPosition(1),migPosition(2))==0 && ...%Check (1)if the target site is vacant; (2)if the target site is within the actual domain
                             domain_x(migPosition(1),migPosition(2))<=Xmax && ...
                             domain_y(migPosition(1),migPosition(2))<=Ymax
@@ -201,7 +201,7 @@
                         transID = 1; %identify if cell has changed color
                     end
                 else %If the selected agent is at (bottom-1)/(bottom-3)/(bottom-5)/... rows
-                    [migPosition(1), migPosition(2)] = Migration2(rowIndex,columnIndex,rowNum,columnNum);
+                    [migPosition(1), migPosition(2)] = Migration2(rowIndex,columnIndex,rowNum,columnNum,BC);
                     if domain(migPosition(1),migPosition(2))==0 && ...%Check (1)if the target site is vacant; (2)if the target site is within the actual domain
                             domain_x(migPosition(1),migPosition(2))<=Xmax && ...
                             domain_y(migPosition(1),migPosition(2))<=Ymax
