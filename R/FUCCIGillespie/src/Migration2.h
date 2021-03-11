@@ -137,8 +137,8 @@ ivec Migration2(int& rowIndex, int& columnIndex, int& rowNum, int& columnNum, in
             else {
                 MigRow = rowIndex + 1;
             }
-            if (columnIndex == 0) {
-                MigColumn = 0;
+            if (columnIndex == columnNum - 1) {
+                MigColumn = columnNum - 1;
             }
             else {
                 MigColumn = columnIndex + 1;
