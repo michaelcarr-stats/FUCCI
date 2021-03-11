@@ -1,6 +1,6 @@
 function SMC_ABC
 %% parrallel computing setup
-    ncpus = 8; %number of CPUs to use
+    ncpus = 16; %number of CPUs to use
     clust = parcluster('local');
     clust.JobStorageLocation = tempdir;
     par = parpool(clust,ncpus); 
