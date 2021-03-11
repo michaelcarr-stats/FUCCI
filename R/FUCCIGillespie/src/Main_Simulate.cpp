@@ -99,7 +99,7 @@ Rcpp::List Main_Simulate(arma::vec theta, Rcpp::List SetupVars, double T_record,
         Index = Rcpp::as<int>(Rcpp::sample(MatchedIndicies.n_elem,1,false))-1; // chosen cell row index
         rowIndex = MatchedIndicies(Index) % rowNum;
         columnIndex = floor(MatchedIndicies(Index)/rowNum);
-        if ((rowNum - rowIndex) % 2 == 0) { //If the selected agent is at bottom/(bottom-2)/(bottom-4)/... rows
+        if ((rowNum - rowIndex + 1) % 2 == 0) { //If the selected agent is at bottom/(bottom-2)/(bottom-4)/... rows
           MigPosition = Migration1(rowIndex, columnIndex, rowNum, columnNum, BC);
           if (domain(MigPosition(0), MigPosition(1)) == 0 && domain_x(MigPosition(0), MigPosition(1)) <= Xmax && domain_y(MigPosition(0), MigPosition(1)) <= Ymax) {
             domain(rowIndex, columnIndex) = 0; //Remove agent at prevous site
@@ -121,7 +121,7 @@ Rcpp::List Main_Simulate(arma::vec theta, Rcpp::List SetupVars, double T_record,
         Index = Rcpp::as<int>(Rcpp::sample(MatchedIndicies.n_elem,1,false))-1; // chosen cell row index
         rowIndex = MatchedIndicies(Index) % rowNum;
         columnIndex = floor(MatchedIndicies(Index)/rowNum);
-        if ((rowNum - rowIndex) % 2 == 0) { //If the selected agent is at bottom/(bottom-2)/(bottom-4)/... rows
+        if ((rowNum - rowIndex + 1) % 2 == 0) { //If the selected agent is at bottom/(bottom-2)/(bottom-4)/... rows
           MigPosition = Migration1(rowIndex, columnIndex, rowNum, columnNum, BC);
           if (domain(MigPosition(0), MigPosition(1)) == 0 && domain_x(MigPosition(0), MigPosition(1)) <= Xmax && domain_y(MigPosition(0), MigPosition(1)) <= Ymax) {
             domain(rowIndex, columnIndex) = 0; //Remove agent at prevous site
@@ -143,7 +143,7 @@ Rcpp::List Main_Simulate(arma::vec theta, Rcpp::List SetupVars, double T_record,
         Index = Rcpp::as<int>(Rcpp::sample(MatchedIndicies.n_elem,1,false))-1; // chosen cell row index
         rowIndex = MatchedIndicies(Index) % rowNum;
         columnIndex = floor(MatchedIndicies(Index)/rowNum);
-        if ((rowNum - rowIndex) % 2 == 0) { //If the selected agent is at bottom/(bottom-2)/(bottom-4)/... rows
+        if ((rowNum - rowIndex + 1) % 2 == 0) { //If the selected agent is at bottom/(bottom-2)/(bottom-4)/... rows
           MigPosition = Migration1(rowIndex, columnIndex, rowNum, columnNum, BC);
           if (domain(MigPosition(0), MigPosition(1)) == 0 && domain_x(MigPosition(0), MigPosition(1)) <= Xmax && domain_y(MigPosition(0), MigPosition(1)) <= Ymax) {
             domain(rowIndex, columnIndex) = 0; //Remove agent at previous site
@@ -189,7 +189,7 @@ Rcpp::List Main_Simulate(arma::vec theta, Rcpp::List SetupVars, double T_record,
         Index = Rcpp::as<int>(Rcpp::sample(MatchedIndicies.n_elem,1,false))-1; // chosen cell row index
         rowIndex = MatchedIndicies(Index) % rowNum;
         columnIndex = floor(MatchedIndicies(Index)/rowNum);
-        if ((rowNum - rowIndex) % 2 == 0) { //If the selected agent is at bottom/(bottom-2)/(bottom-4)/... rows
+        if ((rowNum - rowIndex + 1) % 2 == 0) { //If the selected agent is at bottom/(bottom-2)/(bottom-4)/... rows
           MigPosition = Migration1(rowIndex, columnIndex, rowNum, columnNum, BC);
           if (domain(MigPosition(0), MigPosition(1)) == 0 && domain_x(MigPosition(0), MigPosition(1)) <= Xmax && domain_y(MigPosition(0), MigPosition(1)) <= Ymax) {
             domain(rowIndex, columnIndex) = 1; 
