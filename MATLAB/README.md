@@ -5,7 +5,7 @@ algorithm of Drovandi and Pettitt (2011) which Carr et al. (2021) use to estimat
 `Main_Simulate.m' model. This script is the main script which should be used to call the subsequent functions within 
 this repository, including:
 
-  - `Main_Simulate.m` which calls:
+  - `Main_Simulate.m`, which calls:
     - `Migration1.m`
     - `Migration2.m`
     - `GenerateSummaryStatData.m`
