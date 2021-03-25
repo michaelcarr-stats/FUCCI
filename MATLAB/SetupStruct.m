@@ -13,8 +13,20 @@ function s = SetupStruct(ntrack, Xmax, Ymax, InitPosData, CellTrackingData)
     percentR = 0.33; % percentage of the initial domain to be red
     percentY = 0.33; % percentage of the initial domain to be yellow
     percentG = 0.33; % percentage of the initial domain to be green
-     
-    BC = 2; %Boundary condition, 1.Periodic, 2. No flux
+    
+  %initial number of cells in domain - for experiments which dont not use location data
+  %Cells placed based on percentage and density
+  InitialDensity = 1; %Density of the initial pack
+  percentR = 0.33; % percentage of the initial domain to be red
+  percentY = 0.33; % percentage of the initial domain to be yellow
+  percentG = 0.33; % percentage of the initial domain to be green
+  %Cells placed based on counts
+  SetCells = true; %whether or not to use this method 
+  Nred_0 = 119; %initial number of red cells
+  Nyellow_0 = 35; %initial number of yellow cells 
+  Ngreen_0 = 121; %initial number of green cells
+
+  BC = 2; %Boundary condition, 1.Periodic, 2. No flux
  
  %% Initialisation
     domain = zeros(rowNum,columnNum); %cell phase identity for nodes: 1 if red, 2 if yellow, 3 if green, 0 if unoccupied
@@ -34,7 +46,7 @@ function s = SetupStruct(ntrack, Xmax, Ymax, InitPosData, CellTrackingData)
     
     %Construct the initial domain
     if (isempty(InitPosData) && isempty(CellTrackingData))
-        domain = initialise_domain(domain, domain_x, rowNum, columnNum, initialDensity, Xmax, initialL, percentR, percentY);
+        domain = initialise_domain(domain, domain_x, rowNum, columnNum, initialDensity, Xmax, initialL, percentR, percentY, Nred_0, Nyellow_0, Ngreen_0, SetCells);
         [RowPosCell,ColPosCell,CellSelectedIndex] = InitialMotilitySelect(ntrack, domain, domain_x, Xmax);
     else
         i = round(rowNum - 2*InitPosData(:,2)/(delta*sqrt(3)));
