@@ -17,13 +17,14 @@ SimulationSetup<- function(ntrack, Xmax, Ymax, InitPos = NULL, CellTrackingData 
   columnNum = ceiling(Xmax / delta) + 1; #Corresponding total column nodes
   rowNum = ceiling(Ymax / (delta * sqrt(3) / 2)) + 1; #Corresponding total row nodes
   InitialL = 20 * delta; #Length of the initial agent pack
-  InitialDensity = 1; #Density of the initial pack
   
+  #initial number of cells in domain - for experiments which dont not use location data
+  #Cells placed based on percentage and density
+  InitialDensity = 1; #Density of the initial pack
   percentR = 0.33; # percentage of the initial domain to be red
   percentY = 0.33; # percentage of the initial domain to be yellow
   percentG = 0.33; # percentage of the initial domain to be green
-  
-  #initial number of cells in domain - for experiments which dont not use location data
+  #Cells placed based on counts
   SetCells = TRUE #whether or not to use this method 
   Nred_0 = 119 #initial number of red cells
   Nyellow_0 = 35 #initial number of yellow cells 
