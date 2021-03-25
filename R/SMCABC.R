@@ -194,7 +194,7 @@ while (p_accept > pacc_target && tolmax > tol_target) {
   Samples_trans[(N-N_a+1):N,] <- Samples_trans[rows,]
   
   cov_rw <- cov(Samples_trans[1:(N-N_a),1:num_params]) # computing tunning parameter
-  n_accept <- rep(0, N - N_a)
+  n_accept <- rep(0, N_a)
   
   #trial mcmc step
   tmp <-
@@ -228,12 +228,12 @@ while (p_accept > pacc_target && tolmax > tol_target) {
         
         if (d_prop < tol){
           theta_trans_j <- theta_trans_prop #accept proposal
-          n_accept[j - N_a] <- n_accept[j - N_a] + 1
+          n_accept[j - (N-N_a)] <- n_accept[j - (N-N_a)] + 1
           d <- d_prop
           sx <- sx_prop
         }
       }
-      c(n_accept[j - N_a],theta_trans_j,d,sx)
+      c(n_accept[j - (N-N_a)],theta_trans_j,d,sx)
   }
   
   n_accept <- tmp[,1]
@@ -275,12 +275,12 @@ while (p_accept > pacc_target && tolmax > tol_target) {
         
         if (d_prop < tol){
           theta_trans_j <- theta_trans_prop #accept proposal
-          n_accept[j - N_a] <- n_accept[j - N_a] + 1
+          n_accept[j - (N-N_a)] <- n_accept[j - (N-N_a)] + 1
           d <- d_prop
           sx <- sx_prop
         }
       }
-      c(n_accept[j - N_a],theta_trans_j,d,sx)
+      c(n_accept[j - (N-N_a)],theta_trans_j,d,sx)
     }
   n_accept <- tmp[,1]
   Samples_trans <- rbind(Samples_trans[1:(N-N_a),], tmp[,2:ncol(tmp)])
