@@ -199,7 +199,7 @@ function SMC_ABC
         end
         
         %calculate acceptance rate
-        p_accept = sum(accept((N - N_a +1):N))/((N_a-1)*MCMC_trials);
+        p_accept = sum(accept((N - N_a +1):N))/(N_a*MCMC_trials);
         
         MCMC_iters = ceil(log(c)/log(1-p_accept));
                
