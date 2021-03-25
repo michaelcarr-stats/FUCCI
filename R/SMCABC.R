@@ -240,7 +240,7 @@ while (p_accept > pacc_target && tolmax > tol_target) {
   Samples_trans <- rbind(Samples_trans[1:(N-N_a),], tmp[,2:ncol(tmp)])
   rm(tmp)
                   
-  p_accept <- sum(n_accept)/((N_a-1)*mcmc_trials)
+  p_accept <- sum(n_accept)/(N_a*mcmc_trials)
   mcmc_iters <- ceiling(log(c)/log(1-p_accept))
   
   # remaining mcmc moves step
@@ -287,7 +287,7 @@ while (p_accept > pacc_target && tolmax > tol_target) {
   rm(tmp)
   
   num_mcmc_iters <- max(0,mcmc_iters-mcmc_trials) + mcmc_trials
-  p_accept <- sum(n_accept)/((N_a-1)*num_mcmc_iters)
+  p_accept <- sum(n_accept)/(N_a*num_mcmc_iters)
   mcmc_iters <- ceiling(log(c)/log(1-p_accept))
   mcmc_trials <- ceiling(mcmc_iters/2)
   tolmax <- max(Samples_trans[,"d"])
