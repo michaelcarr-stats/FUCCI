@@ -23,6 +23,12 @@ SimulationSetup<- function(ntrack, Xmax, Ymax, InitPos = NULL, CellTrackingData 
   percentY = 0.33; # percentage of the initial domain to be yellow
   percentG = 0.33; # percentage of the initial domain to be green
   
+  #initial number of cells in domain - for experiments which dont not use location data
+  SetCells = TRUE #whether or not to use this method 
+  Nred_0 = 119 #initial number of red cells
+  Nyellow_0 = 35 #initial number of yellow cells 
+  Ngreen_0 = 121 #initial number of green cells
+  
   BC = 2; #Boundary condition, 1.Periodic, 2. No flux
   
   ########################################
@@ -34,7 +40,8 @@ SimulationSetup<- function(ntrack, Xmax, Ymax, InitPos = NULL, CellTrackingData 
   
   if (is.null(InitPos) & is.null(CellTrackingData)) { #dont use real data
     percentIS <- matrix(c(percentR,percentY,percentG), nrow = 3, ncol = 1)
-    domain <- InitDomain(domain_x, rowNum, columnNum, Xmax, InitialL, InitialDensity, percentIS)
+    countIS <- matrix(c(Nred_0,Nyellow_0,Ngreen_0), nrow = 3, ncol = 1)
+    domain <- InitDomain(domain_x, rowNum, columnNum, Xmax, InitialL, InitialDensity, percentIS, countIS, SetCells)
     
     TrackedCells <- InitialMotilitySelect(ntrack, domain, domain_x, Xmax)
     
