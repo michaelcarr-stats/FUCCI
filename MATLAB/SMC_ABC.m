@@ -86,7 +86,6 @@ function SMC_ABC
     sy = [Nred, Nyellow, Ngreen, TotalDistance];
     
     %% Simulation environment setup
-    simuNum = 3;
     s = SetupStruct(ntrack, Xmax, Ymax, InitPosData, CellTrackingData);
 
     %% SMC ABC Algorithm - proliferation and motility
