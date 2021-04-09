@@ -24,29 +24,29 @@ Rcpp::List Main_Simulate(arma::vec theta, Rcpp::List SetupVars, double T_record,
   double Py = theta(4); // migration rate of yellow per time unit
   double Pg = theta(5); // migration rate of green per time unit
   
-  int ntrack = Rcpp::as<int>(SetupVars["ntrack"]);
-  int simuNum = Rcpp::as<int>(SetupVars["simuNum"]);
-  double delta = Rcpp::as<double>(SetupVars["delta"]);
-  double t = Rcpp::as<double>(SetupVars["t"]);
-  double tstop = Rcpp::as<double>(SetupVars["tstop"]);
-  double Xmax = Rcpp::as<double>(SetupVars["Xmax"]);
-  double Ymax = Rcpp::as<double>(SetupVars["Ymax"]);
-  int columnNum = Rcpp::as<int>(SetupVars["columnNum"]);
-  int rowNum = Rcpp::as<int>(SetupVars["rowNum"]);
-  int BC = Rcpp::as<int>(SetupVars["BC"]);
+  int ntrack = Rcpp::as<int>(SetupVars["ntrack"]); //number of cells to track
+  int simuNum = Rcpp::as<int>(SetupVars["simuNum"]); //number of simulation realisation
+  double delta = Rcpp::as<double>(SetupVars["delta"]); //lattice spacing
+  double t = Rcpp::as<double>(SetupVars["t"]); //initialise time
+  double tstop = Rcpp::as<double>(SetupVars["tstop"]); //experiment end time
+  double Xmax = Rcpp::as<double>(SetupVars["Xmax"]); //image width
+  double Ymax = Rcpp::as<double>(SetupVars["Ymax"]); //image height
+  int columnNum = Rcpp::as<int>(SetupVars["columnNum"]); //number of lattice columns
+  int rowNum = Rcpp::as<int>(SetupVars["rowNum"]); //number of lattice rows
+  int BC = Rcpp::as<int>(SetupVars["BC"]); //Boundary condition
   
-  imat domain = Rcpp::as<imat>(SetupVars["domain"]);
-  mat domain_x = Rcpp::as<mat>(SetupVars["domain_x"]);
-  mat domain_y = Rcpp::as<mat>(SetupVars["domain_y"]);
-  ivec NStartCount = Rcpp::as<ivec>(SetupVars["NStartCount"]);
-  ivec RowPosCell = Rcpp::as<ivec>(SetupVars["RowPosCell"]);
-  ivec ColPosCell = Rcpp::as<ivec>(SetupVars["ColPosCell"]);
-  ivec CellSelected = Rcpp::as<ivec>(SetupVars["CellSelected"]);
-  ivec CellSelectedStart = CellSelected;
+  imat domain = Rcpp::as<imat>(SetupVars["domain"]); //initial domain
+  mat domain_x = Rcpp::as<mat>(SetupVars["domain_x"]); //x-coordinates of domain
+  mat domain_y = Rcpp::as<mat>(SetupVars["domain_y"]); //y-coordinates of domain
+  ivec NStartCount = Rcpp::as<ivec>(SetupVars["NStartCount"]); //initial number of cells
+  ivec RowPosCell = Rcpp::as<ivec>(SetupVars["RowPosCell"]); //row index in domain of tracked cells
+  ivec ColPosCell = Rcpp::as<ivec>(SetupVars["ColPosCell"]); //column index in domain of tracked cells
+  ivec CellSelected = Rcpp::as<ivec>(SetupVars["CellSelected"]); //cell phase indicator of tracked cells (1,2, or 3)
+  ivec CellSelectedStart = CellSelected; // initial cell phase of tracked cells
   
-  int Nred = (int) NStartCount(0);
-  int Nyellow = (int) NStartCount(1);
-  int Ngreen = (int) NStartCount(2);
+  int Nred = (int) NStartCount(0); //number of red cells
+  int Nyellow = (int) NStartCount(1); //number of yellow cells
+  int Ngreen = (int) NStartCount(2); //number of green cells
   
   //local variables
   double ar; // red movement
@@ -67,8 +67,7 @@ Rcpp::List Main_Simulate(arma::vec theta, Rcpp::List SetupVars, double T_record,
   uvec MatchedIndicies; // vectot of found indicies (singular)
   int Index; // vector of indicies in the vector MatchedIndicies
   
-  //output objects
-  Rcpp::List L; 
+  Rcpp::List L; //output object
   
   Rcpp::List SummaryStatsData; //inititialse empty list
   
@@ -104,14 +103,14 @@ Rcpp::List Main_Simulate(arma::vec theta, Rcpp::List SetupVars, double T_record,
           if (domain(MigPosition(0), MigPosition(1)) == 0 && domain_x(MigPosition(0), MigPosition(1)) <= Xmax && domain_y(MigPosition(0), MigPosition(1)) <= Ymax) {
             domain(rowIndex, columnIndex) = 0; //Remove agent at prevous site
             domain(MigPosition(0), MigPosition(1)) = 1; //Move agent to the new site
-            migFailed = 0;
+            migFailed = 0; //indicate migration event was successful
           }
         } else { //If the selected agent is at (bottom-1)/(bottom-3)/(bottom-5)/... rows
           MigPosition = Migration2(rowIndex, columnIndex, rowNum, columnNum, BC);
           if (domain(MigPosition(0), MigPosition(1)) == 0 && domain_x(MigPosition(0), MigPosition(1)) <= Xmax && domain_y(MigPosition(0), MigPosition(1)) <= Ymax) {
             domain(rowIndex, columnIndex) = 0; //Remove agent at prevous site
             domain(MigPosition(0), MigPosition(1)) = 1; //Move agent to the new site
-            migFailed = 0;
+            migFailed = 0; //indicate migration event was successful
           }
         }
         
@@ -126,14 +125,14 @@ Rcpp::List Main_Simulate(arma::vec theta, Rcpp::List SetupVars, double T_record,
           if (domain(MigPosition(0), MigPosition(1)) == 0 && domain_x(MigPosition(0), MigPosition(1)) <= Xmax && domain_y(MigPosition(0), MigPosition(1)) <= Ymax) {
             domain(rowIndex, columnIndex) = 0; //Remove agent at prevous site
             domain(MigPosition(0), MigPosition(1)) = 2; //Move agent to the new site
-            migFailed = 0;
+            migFailed = 0; //indicate migration event was successful
           }
         } else { //If the selected agent is at (bottom-1)/(bottom-3)/(bottom-5)/... rows
           MigPosition = Migration2(rowIndex, columnIndex, rowNum, columnNum, BC);
           if (domain(MigPosition(0), MigPosition(1)) == 0 && domain_x(MigPosition(0), MigPosition(1)) <= Xmax && domain_y(MigPosition(0), MigPosition(1)) <= Ymax) {
             domain(rowIndex, columnIndex) = 0; //Remove agent at prevous site
             domain(MigPosition(0), MigPosition(1)) = 2; //Move agent to the new site
-            migFailed = 0;
+            migFailed = 0; //indicate migration event was successful
           }
         }
         
@@ -148,14 +147,14 @@ Rcpp::List Main_Simulate(arma::vec theta, Rcpp::List SetupVars, double T_record,
           if (domain(MigPosition(0), MigPosition(1)) == 0 && domain_x(MigPosition(0), MigPosition(1)) <= Xmax && domain_y(MigPosition(0), MigPosition(1)) <= Ymax) {
             domain(rowIndex, columnIndex) = 0; //Remove agent at previous site
             domain(MigPosition(0), MigPosition(1)) = 3; //Move agent to the new site
-            migFailed = 0;
+            migFailed = 0; //indicate migration event was successful
           }
         } else { //If the selected agent is at (bottom-1)/(bottom-3)/(bottom-5)/... rows
           MigPosition = Migration2(rowIndex, columnIndex, rowNum, columnNum, BC);
           if (domain(MigPosition(0), MigPosition(1)) == 0 && domain_x(MigPosition(0), MigPosition(1)) <= Xmax && domain_y(MigPosition(0), MigPosition(1)) <= Ymax) {
             domain(rowIndex, columnIndex) = 0; //Remove agent at previous site
             domain(MigPosition(0), MigPosition(1)) = 3; //Move agent to the new site
-            migFailed = 0;
+            migFailed = 0; //indicate migration event was successful
           }
         }
         
@@ -168,7 +167,7 @@ Rcpp::List Main_Simulate(arma::vec theta, Rcpp::List SetupVars, double T_record,
         domain(rowIndex, columnIndex) = 2; //change domain entry to a yellow agent
         Nyellow += 1; //Update yellow population
         Nred -= 1; //Update Red population
-        transID = 2;
+        transID = 2; //indicate red-to-yellow transition event occured
         
         
         //Transition Yellow to Green
@@ -180,7 +179,7 @@ Rcpp::List Main_Simulate(arma::vec theta, Rcpp::List SetupVars, double T_record,
         domain(rowIndex, columnIndex) = 3; //change domain entry to a yellow agent
         Ngreen += 1; //Update green population
         Nyellow -= 1; //Update yellow population
-        transID = 3;
+        transID = 3; //indicate yellow-to-green transition event occured
         
         
         //Transition Green to Red
@@ -196,7 +195,7 @@ Rcpp::List Main_Simulate(arma::vec theta, Rcpp::List SetupVars, double T_record,
             domain(MigPosition(0), MigPosition(1)) = 1; //Move agent to the new site
             Nred += 2; //update Red cell population
             Ngreen -= 1; //update Green cell population
-            transID = 1;
+            transID = 1; //indicate green-to-red transition event occured
           }
         }
         else { //If the selected agent is at (bottom-1)/(bottom-3)/(bottom-5)/... rows
@@ -206,12 +205,12 @@ Rcpp::List Main_Simulate(arma::vec theta, Rcpp::List SetupVars, double T_record,
             domain(MigPosition(0), MigPosition(1)) = 1; //Move agent to the new site
             Nred += 2; //update Red cell population
             Ngreen -= 1; //update Green cell population
-            transID = 1;
+            transID = 1; //indicate green-to-red transition event occured
           }
         }
       }
       
-      SummaryStatsData = GenerateSummaryStatData(CellTracking, SummaryStatsData, ntrack, T_record, t, Nred, Nyellow, Ngreen, RowPosCell, ColPosCell, CellSelected, CellSelectedStart, rowIndex, columnIndex, migFailed, transID, delta, simuIndex, simuNum, domain, domain_x);
+      SummaryStatsData = GenerateSummaryStatData(CellTracking, SummaryStatsData, ntrack, T_record, t, Nred, Nyellow, Ngreen, RowPosCell, ColPosCell, CellSelected, CellSelectedStart, rowIndex, columnIndex, migFailed, transID, delta, simuIndex, simuNum, domain, domain_x); //Record summary statistic data
       
       if (CellTracking) {
         if (!migFailed && (int) SummaryStatsData["cellID"] != -1) {
@@ -227,7 +226,7 @@ Rcpp::List Main_Simulate(arma::vec theta, Rcpp::List SetupVars, double T_record,
       migFailed = 1;
       
       
-      //	calculate time step
+      //	calculate time step & increment
       tau = (1 / a0) * log(1 / R::runif(0,1));
       t += tau;
     }
@@ -255,9 +254,9 @@ Rcpp::List Main_Simulate(arma::vec theta, Rcpp::List SetupVars, double T_record,
   
   ExitSimStatus = 0; //indicate simulation finished successfully
   
-  if (CellTracking) {
+  if (CellTracking) { //cell-tracking data generated
     return L = Rcpp::List::create(Rcpp::Named("ExitSimStatus") = Rcpp::wrap(ExitSimStatus), Rcpp::Named("Nred") = SummaryStatsData["Nred_ss"], Rcpp::Named("Nyellow") = SummaryStatsData["Nyellow_ss"], Rcpp::Named("Ngreen") = SummaryStatsData["Ngreen_ss"], Rcpp::Named("red_distance") = SummaryStatsData["red_distance"], Rcpp::Named("yellow_distance") = SummaryStatsData["yellow_distance"], Rcpp::Named("green_distance") = SummaryStatsData["green_distance"], Rcpp::Named("red_time") = SummaryStatsData["red_time"], Rcpp::Named("yellow_time") = SummaryStatsData["yellow_time"], Rcpp::Named("green_time") = SummaryStatsData["green_time"]);
-  } else { //spatio-temporal
+  } else { //spatio-temporal data generated
     return L = Rcpp::List::create(Rcpp::Named("ExitSimStatus") = Rcpp::wrap(ExitSimStatus), Rcpp::Named("Nred") = SummaryStatsData["Nred_ss"], Rcpp::Named("Nyellow") = SummaryStatsData["Nyellow_ss"], Rcpp::Named("Ngreen") = SummaryStatsData["Ngreen_ss"], Rcpp::Named("red_position") = SummaryStatsData["red_position"], Rcpp::Named("yellow_position") = SummaryStatsData["yellow_position"], Rcpp::Named("green_position") = SummaryStatsData["green_position"]);
   }
 }
