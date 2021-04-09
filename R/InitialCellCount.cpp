@@ -5,6 +5,7 @@ using namespace Rcpp;
 //[[Rcpp::export]]
 IntegerMatrix InitialCellCount(IntegerMatrix &domain, NumericMatrix &domain_x, NumericMatrix &domain_y, int &nrow, int &ncol, double &Xmax, double &Ymax) {
   
+  //initialise variables
   IntegerMatrix CellCounts(3,1);
   int Nred = 0;
   int Nyellow = 0;
