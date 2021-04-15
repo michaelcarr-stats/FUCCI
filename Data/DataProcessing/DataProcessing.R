@@ -97,4 +97,4 @@ InitPos_color <- InitPos_color %>% mutate(x = x*x_scale, y = y*y_scale)
 FinalPos_color <- FinalPos_color %>% mutate(x = x*x_scale, y = y*y_scale)
 CellTracking_color <- CellTracking_color %>% mutate(x = x*x_scale, y = y*y_scale)
 
-write_xlsx(list(InitPos = InitPos_color, FinalPos = FinalPos_color, CellTracking = CellTracking_color), "FUCCI_proccessed.xlsx")
+write_xlsx(list(InitPos = InitPos_color, FinalPos = FinalPos_color, CellTracking = CellTracking_color), "FUCCI_processed.xlsx")
