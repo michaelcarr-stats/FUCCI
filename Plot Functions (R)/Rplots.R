@@ -2,12 +2,16 @@ library(readxl)
 library(tidyverse)
 library(ggpubr)
 
-setwd("Z:/R")
-Experiment_CellTracking <- read_excel("SMCABC_DATA.xlsx", sheet = "Experiment_CellTracking")
-Experiment_CellDensity <- read_excel("SMCABC_DATA.xlsx", sheet = "Experiment_CellDensity")
-ProliferationData <- read_excel("SMCABC_DATA.xlsx", sheet = "ProliferationData")
-MotilityData <- read_excel("SMCABC_DATA.xlsx", sheet = "MotilityData")
-SixParameterData <- read_excel("SMCABC_DATA.xlsx", sheet = "SixParameterData")
+#set working directory to the directory of this R file
+
+#load data
+Experiment_CellTracking <- read_excel("../Data/SMCABC returned data/SMCABC_DATA.xlsx", sheet = "Experiment_CellTracking")
+Experiment_CellDensity <- read_excel("../Data/SMCABC returned data/SMCABC_DATA.xlsx", sheet = "Experiment_CellDensity")
+ProliferationData <- read_excel("../Data/SMCABC returned data/SMCABC_DATA.xlsx", sheet = "ProliferationData")
+MotilityData <- read_excel("../Data/SMCABC returned data/SMCABC_DATA.xlsx", sheet = "MotilityData")
+SixParameterData <- read_excel("../Data/SMCABC returned data/SMCABC_DATA.xlsx", sheet = "SixParameterData")
+CellTracking <- read_excel("../Data/DataProcessing/FUCCI_proccessed.xlsx", sheet = "CellTracking")
+
 
 #observed summary statistics
 Nred <- 566
@@ -428,7 +432,7 @@ MotilityData <-
     Simulation == 2 ~ "(b)",
     Simulation == 3 ~ "(c)",
     Simulation == 4 ~ "(d)"
-  )) %>% 
+  )) 
 
 
 MotilityData %>% 
@@ -472,12 +476,13 @@ MotilityData %>%
 ggsave("Motility_SIM_CellDensity.pdf", width = 9, height = 4, units = "in")
 
 ## Cell Trajectories ## - 8x8
-CellTracking <- read_excel("FUCCI_proccessed.xlsx", sheet = "CellTracking")
-
 
 CellTracking %>% 
   mutate(firstID = ifelse(frame == 1, ntrack, NA)) %>%
-  mutate(color =factor(color, levels = c("G1", "eS", "S/G2/M"))) %>% 
+  mutate(
+    color = case_when(color == 1 ~ "G1", color == 2 ~ "eS", color == 3 ~ "S/G2/M"),
+    color = factor(color, levels = c("G1", "eS", "S/G2/M"))
+    ) %>% 
   mutate(facets = case_when(
     ntrack == 1 ~ "(a)",
     ntrack == 2 ~ "(b)",
@@ -513,11 +518,15 @@ CellTracking %>%
   ) +
   scale_colour_manual(values = c("red", "gold", "green")) 
 
+ggsave("CellTrajectories.pdf", width = 8, height = 8, units = "in")
 
 #cell trajectories (sub sample)
 CellTracking %>% 
   mutate(firstID = ifelse(frame == 1, ntrack, NA)) %>% 
-  mutate(color =factor(color, levels = c("G1", "eS", "S/G2/M"))) %>% 
+  mutate(
+    color = case_when(color == 1 ~ "G1", color == 2 ~ "eS", color == 3 ~ "S/G2/M"),
+    color = factor(color, levels = c("G1", "eS", "S/G2/M"))
+  ) %>%  
   filter(ntrack %in% c(1,12,11,15,2,9,16,18,3,17,5,14,19)) %>% 
   ggplot(aes(x = x, y = y, group = ntrack)) +
   geom_point(aes(color = as.factor(color), shape = as.factor(color))) +
@@ -527,3 +536,5 @@ CellTracking %>%
   theme(legend.position = "bottom",
         legend.title = element_blank()) +
   scale_colour_manual(values = c("red", "gold", "green"))
+
+ggsave("CellTrajectories_subsample.pdf", width = 5, height = 5, units = "in")
