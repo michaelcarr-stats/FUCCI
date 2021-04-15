@@ -10,7 +10,7 @@ Experiment_CellDensity <- read_excel("../Data/SMCABC returned data/SMCABC_DATA.x
 ProliferationData <- read_excel("../Data/SMCABC returned data/SMCABC_DATA.xlsx", sheet = "ProliferationData")
 MotilityData <- read_excel("../Data/SMCABC returned data/SMCABC_DATA.xlsx", sheet = "MotilityData")
 SixParameterData <- read_excel("../Data/SMCABC returned data/SMCABC_DATA.xlsx", sheet = "SixParameterData")
-CellTracking <- read_excel("../Data/DataProcessing/FUCCI_proccessed.xlsx", sheet = "CellTracking")
+CellTracking <- read_excel("../Data/DataProcessing/FUCCI_processed.xlsx", sheet = "CellTracking")
 
 
 #observed summary statistics
