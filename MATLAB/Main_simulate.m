@@ -214,17 +214,18 @@
                 end
             end
             
-            SummaryStatData = GenerateSummaryStatData(CellTracking, SummaryStatData, ntrack, T_record, t, Nred, Nyellow, Ngreen, RowPosCell, ColPosCell, CellSelected, CellSelectedStart, rowIndex, columnIndex, migFailed, transID, delta, simuIndex, simuNum, domain, domain_x);
+            %generate summary statistic data 
+            SummaryStatData = GenerateSummaryStatData(CellTracking, SummaryStatData, ntrack, T_record, t, Nred, Nyellow, Ngreen, RowPosCell, ColPosCell, CellSelected, CellSelectedStart, rowIndex, columnIndex, migFailed, transID, delta, simuIndex, simuNum, domain, domain_x); 
             
             if ~migFailed && any((RowPosCell == rowIndex).*(ColPosCell== columnIndex))
-                index = (1:ntrack).*(RowPosCell == rowIndex).*(ColPosCell == columnIndex);
-                index = index(index ~= 0);
+                index = (1:ntrack).*(RowPosCell == rowIndex).*(ColPosCell == columnIndex); %determine which tracked cell moved
+                index = index(index ~= 0); 
                 RowPosCell(1,index) = migPosition(1); %update positions
                 ColPosCell(1,index) = migPosition(2); %update positions
             elseif transID ~= 0 && any((RowPosCell == rowIndex).*(ColPosCell== columnIndex))
-                index = (1:ntrack).*(RowPosCell == rowIndex).*(ColPosCell == columnIndex);
+                index = (1:ntrack).*(RowPosCell == rowIndex).*(ColPosCell == columnIndex); %determine which tracked cell transitioned
                 index = index(index ~= 0);
-                CellSelected(1,index) = transID;
+                CellSelected(1,index) = transID; %update phase id
             end
             
             transID = 0; %reset transition ID for next iteration
@@ -255,5 +256,5 @@
         simuIndex = simuIndex + 1; %Update simulation index for the next realisation
     end
     
-   ExitSimStatus = false;
+   ExitSimStatus = false; %indicate simulation finished successfully
 end
