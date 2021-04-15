@@ -1,6 +1,7 @@
 function SummaryStatData = GenerateSummaryStatData(CellTracking, SummaryStatData, ntrack, T_record, t, Nred, Nyellow, Ngreen, RowPosCell, ColPosCell, CellSelected, CellSelectedStart, rowIndex, columnIndex, migFailed, transID, delta, simuIndex, simuNum, domain, domain_x)
     
-    if CellTracking
+    if CellTracking %if using cell tracking data
+        %initialise structure
         if ~isstruct(SummaryStatData)
             %summary statistics
             clear SummaryStatData
@@ -18,7 +19,7 @@ function SummaryStatData = GenerateSummaryStatData(CellTracking, SummaryStatData
             SummaryStatData.phasestart_time = zeros(simuNum, ntrack);
             SummaryStatData.TrackingCompleted = zeros(simuNum, ntrack, 2);
         end
-        
+       
         red_distance = SummaryStatData.red_distance;
         yellow_distance = SummaryStatData.yellow_distance; 
         green_distance = SummaryStatData.green_distance;
@@ -28,13 +29,14 @@ function SummaryStatData = GenerateSummaryStatData(CellTracking, SummaryStatData
         phasestart_time = SummaryStatData.phasestart_time;
         TrackingCompleted = SummaryStatData.TrackingCompleted;
         
-        
+        %record number of cells in simulation
         if (t >= T_record - 1)
             SummaryStatData.Nred_ss(simuIndex) = Nred;
             SummaryStatData.Nyellow_ss(simuIndex) = Nyellow;
             SummaryStatData.Ngreen_ss(simuIndex) = Ngreen;
         end
-               
+        
+        % record cell trajectory data
         if ~migFailed || transID ~= 0
             if any((RowPosCell == rowIndex).*(ColPosCell== columnIndex))
 
@@ -94,21 +96,22 @@ function SummaryStatData = GenerateSummaryStatData(CellTracking, SummaryStatData
             end    
         end
         
-        %summary statistics
-            SummaryStatData.red_distance = red_distance;
-            SummaryStatData.yellow_distance = yellow_distance;
-            SummaryStatData.green_distance = green_distance;
-            
-            %additional helper variables
-            SummaryStatData.red_time = red_time;
-            SummaryStatData.yellow_time = yellow_time;
-            SummaryStatData.green_time = green_time;
-            SummaryStatData.phasestart_time = phasestart_time;
-            SummaryStatData.TrackingCompleted = TrackingCompleted;
+        % store summary statistics
+        SummaryStatData.red_distance = red_distance;
+        SummaryStatData.yellow_distance = yellow_distance;
+        SummaryStatData.green_distance = green_distance;
+
+        %save additional helper variables
+        SummaryStatData.red_time = red_time;
+        SummaryStatData.yellow_time = yellow_time;
+        SummaryStatData.green_time = green_time;
+        SummaryStatData.phasestart_time = phasestart_time;
+        SummaryStatData.TrackingCompleted = TrackingCompleted;
         
-    else
+    else % if cell density was used
         
         if (t >= T_record - 1)
+            %initialise structure
             if ~isstruct(SummaryStatData)
                 %summary statistics
                 clear SummaryStatData
@@ -120,10 +123,12 @@ function SummaryStatData = GenerateSummaryStatData(CellTracking, SummaryStatData
                 SummaryStatData.green_position = cell(simuNum, 1);               
             end
             
+            %compute number of cells in simulation 
             SummaryStatData.Nred_ss(simuIndex) = Nred;
             SummaryStatData.Nyellow_ss(simuIndex) = Nyellow;
             SummaryStatData.Ngreen_ss(simuIndex) = Ngreen;
             
+            %compute x position of cells in simulation
             SummaryStatData.red_position(simuIndex) = mat2cell(domain_x(domain == 1), length(domain_x(domain == 1)));
             SummaryStatData.yellow_position(simuIndex) = mat2cell(domain_x(domain == 2), length(domain_x(domain == 2)));
             SummaryStatData.green_position(simuIndex) = mat2cell(domain_x(domain == 3), length(domain_x(domain == 3)));
