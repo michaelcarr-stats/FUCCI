@@ -1,13 +1,13 @@
 function SMC_ABC
-%% parrallel computing setup
+    %% parrallel computing setup
     ncpus = 16; %number of CPUs to use
     clust = parcluster('local');
     clust.JobStorageLocation = tempdir;
     par = parpool(clust,ncpus); 
-%% set seed
-    rng(1234);
+
+    rng(1234); % set seed
     
-%% Inputs
+    %% Inputs
     N = 1000; %initial number of simulations
     T_record = 48; %time period to record summary statistics
 
@@ -27,11 +27,12 @@ function SMC_ABC
     %Movement prior - uniform U(m_lb,m_ub)
     m_lb = 0; m_ub = 10;
 
-    num_params = 6;
+    num_params = 6; %number of parameters to estimate
     
     %% Observed Data
     CellTracking = true; %TRUE - if using cell trajectory data; FALSE - if using cell density data
     
+    %load data
     InitPosData = readmatrix("FUCCI_proccessed.xlsx", "sheet","InitPos");
     FinalPosData = readmatrix("FUCCI_proccessed.xlsx", "sheet","FinalPos");
     CellTrackingData = readmatrix("FUCCI_proccessed.xlsx", "sheet","CellTracking");
@@ -45,8 +46,9 @@ function SMC_ABC
     Nyellow = sum(FinalPosData(:,3) == 2);
     Ngreen = sum(FinalPosData(:,3) == 3);
     
-    if CellTracking
+    if CellTracking %if using cell tracking summary statistics
         
+        %compute distance travelled through each cell phase by all tracked cells
         RedDistance = 0;
         YellowDistance = 0;
         GreenDistance = 0;
@@ -69,27 +71,30 @@ function SMC_ABC
 
        TotalDistance = [RedDistance/ntrack, YellowDistance/ntrack, GreenDistance/ntrack];
        
-    else
+    else %if using cell density summary statistics
         
+        %compute median positon of cells on LHS and RHS of scratch
         RedDistanceMed = [median(FinalPosData(FinalPosData(:,3) == 1 & FinalPosData(:,1) <= Xmax/2, 1)), median(FinalPosData(FinalPosData(:,3) == 1 & FinalPosData(:,1) > Xmax/2, 1))];
         YellowDistanceMed = [median(FinalPosData(FinalPosData(:,3) == 2 & FinalPosData(:,1) <= Xmax/2, 1)), median(FinalPosData(FinalPosData(:,3) == 2 & FinalPosData(:,1) > Xmax/2, 1))];
         GreenDistanceMed = [median(FinalPosData(FinalPosData(:,3) == 3 & FinalPosData(:,1) <= Xmax/2, 1)), median(FinalPosData(FinalPosData(:,3) == 3 & FinalPosData(:,1) > Xmax/2, 1))];
         
+        %compute IQR of cells on the LHS and RHS of scratch
         RedDistanceIQR = [iqr(FinalPosData(FinalPosData(:,3) == 1 & FinalPosData(:,1) <= Xmax/2, 1)), iqr(FinalPosData(FinalPosData(:,3) == 1 & FinalPosData(:,1) > Xmax/2, 1))];
         YellowDistanceIQR = [iqr(FinalPosData(FinalPosData(:,3) == 2 & FinalPosData(:,1) <= Xmax/2, 1)), iqr(FinalPosData(FinalPosData(:,3) == 2 & FinalPosData(:,1) > Xmax/2, 1))];
         GreenDistanceIQR = [iqr(FinalPosData(FinalPosData(:,3) == 3 & FinalPosData(:,1) <= Xmax/2, 1)), iqr(FinalPosData(FinalPosData(:,3) == 3 & FinalPosData(:,1) > Xmax/2, 1))];
         
-        TotalDistance = [RedDistanceMed,YellowDistanceMed,GreenDistanceMed,RedDistanceIQR,YellowDistanceIQR,GreenDistanceIQR];
+        TotalDistance = [RedDistanceMed,YellowDistanceMed,GreenDistanceMed,RedDistanceIQR,YellowDistanceIQR,GreenDistanceIQR]; 
         
     end
     
-    sy = [Nred, Nyellow, Ngreen, TotalDistance];
+    sy = [Nred, Nyellow, Ngreen, TotalDistance]; %store observed summary statistics
     
     %% Simulation environment setup
     s = SetupStruct(ntrack, Xmax, Ymax, InitPosData, CellTrackingData);
 
     %% SMC ABC Algorithm - proliferation and motility
-        
+    
+    %initialisation
     theta = zeros(N,num_params+1);
     summaries = zeros(N,length(sy));
     
@@ -102,13 +107,13 @@ function SMC_ABC
                 %simulate x ~ f(x|theta)
                 [SummaryStatData, ExitSimStatus] = Main_simulate(theta_prop, s, T_record, CellTracking);
                               
-                if ExitSimStatus %if parameter choice resulted in cell type death then reject parameters
+                if ExitSimStatus %check if simulation finished correctly
                     continue;
                 end 
                 
-                sx = GenerateSummaryStatistics(SummaryStatData, CellTracking, Xmax);
-                if any(isnan(sx))
-                    continue 
+                sx = GenerateSummaryStatistics(SummaryStatData, CellTracking, Xmax); %compute simulated summary stats
+                if any(isnan(sx)) %check integrity of summary statistics
+                    continue  
                 end 
                 
                 d = norm(sx - sy, 2); %discrepency function
@@ -129,6 +134,7 @@ function SMC_ABC
     %sort theta by the discrepency function
     theta_trans = sortrows(theta_trans, num_params + 1);
     
+    %initialise
     p_accept = 1;
     tolmax = theta_trans(N-N_a,num_params+1);
     
@@ -165,7 +171,7 @@ function SMC_ABC
                 r = exp(sum(log(exp(-theta_trans_prop))) - sum(log((1+exp(-theta_trans_prop)).^2)) - (sum(log(exp(-theta_trans_j))) - sum(log((1+exp(-theta_trans_j)).^2))));
                 
                 if rand > r
-                    continue
+                    continue %reject proposal
                 end
                 
                 %transform back to theta to simulate
@@ -174,18 +180,18 @@ function SMC_ABC
                  %simulate x ~ f(x|theta)
                 [SummaryStatData, ExitSimStatus] = Main_simulate(theta_prop, s, T_record, CellTracking);
                               
-                if ExitSimStatus %if parameter choice resulted in cell type death then reject parameters
+                if ExitSimStatus %check if simulation finished correctly
                     continue;
                 end 
                 
                 sx = GenerateSummaryStatistics(SummaryStatData, CellTracking, Xmax);
-                if any(isnan(sx))
+                if any(isnan(sx)) %check integrity of summary statistics
                     continue 
                 end                 
                 
                 d = norm(sx - sy, 2); %discrepency function
                 if d > tol
-                    continue
+                    continue %reject proposal
                 end
                                 
                 theta_trans_j = theta_trans_prop; %update theta_j
@@ -198,10 +204,9 @@ function SMC_ABC
 
         end
         
-        %calculate acceptance rate
-        p_accept = sum(accept((N - N_a +1):N))/(N_a*MCMC_trials);
         
-        MCMC_iters = ceil(log(c)/log(1-p_accept));
+        p_accept = sum(accept((N - N_a +1):N))/(N_a*MCMC_trials);%calculate acceptance rate
+        MCMC_iters = ceil(log(c)/log(1-p_accept)); %calculate additional mcmc moves required
                
         % Move Step
         parfor (j = (N - N_a +1):N,ncpus)
@@ -216,27 +221,27 @@ function SMC_ABC
                 r = exp(sum(log(exp(-theta_trans_prop))) - sum(log((1+exp(-theta_trans_prop)).^2)) - (sum(log(exp(-theta_trans_j))) - sum(log((1+exp(-theta_trans_j)).^2))));
                 
                 if rand > r
-                    continue
+                    continue %reject proposal
                 end
                 
                 %transform back to theta to simulate
                 theta_prop = [TransformationFun(theta_trans_prop(:,1:3),1,true),TransformationFun(theta_trans_prop(:,4:6),10,true)];
                 
-                                %simulate x ~ f(x|theta)
+                 %simulate x ~ f(x|theta)
                 [SummaryStatData, ExitSimStatus] = Main_simulate(theta_prop, s, T_record, CellTracking);
                               
-                if ExitSimStatus %if parameter choice resulted in cell type death then reject parameters
+                if ExitSimStatus %check if simulation finished correctly
                     continue;
                 end 
                 
                 sx = GenerateSummaryStatistics(SummaryStatData, CellTracking, Xmax);
-                if any(isnan(sx))
+                if any(isnan(sx)) %check integrity of summary statistics
                     continue 
-                end  
+                end                 
                 
                 d = norm(sx - sy, 2); %discrepency function
                 if d > tol
-                    continue
+                    continue %reject proposal
                 end
                                 
                 theta_trans_j = theta_trans_prop; %update theta_j
@@ -256,20 +261,22 @@ function SMC_ABC
         theta_trans = sortrows(theta_trans, num_params + 1);
 
         %calculate acceptance ratio
-        num_MCMC_iters = max(0,MCMC_iters - MCMC_trials) + MCMC_trials;
+        num_MCMC_iters = max(0,MCMC_iters - MCMC_trials) + MCMC_trials; %calculate number of mcmc iterations
         accept = accept((N - N_a + 1):N,1); %remove unsampled rows
-        p_accept = sum(accept)/(length(accept)*num_MCMC_iters);
+        p_accept = sum(accept)/(length(accept)*num_MCMC_iters); %compute overall acceptance rate
         
-        MCMC_iters = ceil(log(c)/log(1-p_accept));
-        MCMC_trials = ceil(MCMC_iters/2);
+        MCMC_iters = ceil(log(c)/log(1-p_accept)); %compute number of mcmc iterations required
+        MCMC_trials = ceil(MCMC_iters/2); %compute pilot number of mcmc iterations for next sequence
 
-        tolmax = theta_trans(N-N_a,num_params + 1);
-        p_unique = length(unique(theta_trans, 'rows'))/N;
+        tolmax = theta_trans(N-N_a,num_params + 1); %compute max tolerance for next sequence
+        p_unique = length(unique(theta_trans, 'rows'))/N; %compute number of unique particles
         
+        %display performance stats
         display(p_accept)
         display(tolmax)
         display(p_unique)
-        save(sprintf('progress%d.mat',ntrack),'theta_trans', 'p_accept','tolmax','p_unique');
+        
+        save(sprintf('progress%d.mat',ntrack),'theta_trans', 'p_accept','tolmax','p_unique'); %write performance stats to excel
     end
     
     % Correct way to close the parallel pool
@@ -284,23 +291,24 @@ function SMC_ABC
     d_vec = theta_trans(:, num_params + 1);
     summaries = theta_trans(:, (num_params + 2):end);
     theta_trans = theta_trans(:, 1:num_params);
-    
-    
+   
     %weighting
     the_weights = 0.75*(1-(d_vec./max(d_vec)).^2);
     
     %apply adjustment to one parmater at a time
     for i = 1:num_params
-        b = glmfit(summaries,theta_trans(:,i),'normal','weights',the_weights);
-        theta_trans_regressed(:,i) = theta_trans(:,i)-(summaries-repmat(sy,N,1))*b(2:end);
+        b = glmfit(summaries,theta_trans(:,i),'normal','weights',the_weights); %calculate coefficients
+        theta_trans_regressed(:,i) = theta_trans(:,i)-(summaries-repmat(sy,N,1))*b(2:end); %apply adjustment
     end    
-    
+   
+   %inverse transform particles
    theta = [TransformationFun(theta_trans(:,1:3),1,true), TransformationFun(theta_trans(:,4:6),10,true)];
    theta_regressed = [TransformationFun(theta_trans_regressed(:,1:3),1,true), TransformationFun(theta_trans_regressed(:,4:6),10,true)];
+   
 %% save results   
 
     filename = sprintf('results_SMCABC_track%d.mat',ntrack);
-    save(filename,'theta','theta_regressed','sy','d_vec', 'summaries');
+    save(filename,'theta','theta_regressed','sy','d_vec', 'summaries'); %save data
 
     quit;
 end  
