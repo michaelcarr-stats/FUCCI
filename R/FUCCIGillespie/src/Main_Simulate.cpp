@@ -17,12 +17,12 @@ Rcpp::List Main_Simulate(arma::vec theta, Rcpp::List SetupVars, double T_record,
   //////////////////////////////////////////////						
   
   //Input variables
-  double Kry = theta(0); // transition rate of red to yellow per time unit
-  double Kyg = theta(1); // transition rate of yellow to green per time unit
-  double Kgr = theta(2); // transition rate of green to red per time unit
-  double Pr = theta(3); // migration rate of red per time unit
-  double Py = theta(4); // migration rate of yellow per time unit
-  double Pg = theta(5); // migration rate of green per time unit
+  double Rr = theta(0); // transition rate of red to yellow per time unit
+  double Ry = theta(1); // transition rate of yellow to green per time unit
+  double Rg = theta(2); // transition rate of green to red per time unit
+  double Mr = theta(3); // migration rate of red per time unit
+  double My = theta(4); // migration rate of yellow per time unit
+  double Mg = theta(5); // migration rate of green per time unit
   
   int ntrack = Rcpp::as<int>(SetupVars["ntrack"]); //number of cells to track
   int simuNum = Rcpp::as<int>(SetupVars["simuNum"]); //number of simulation realisation
@@ -82,12 +82,12 @@ Rcpp::List Main_Simulate(arma::vec theta, Rcpp::List SetupVars, double T_record,
     
     while (t < tstop) {
       
-      ar = Pr * Nred; // red movement
-      ay = Py * Nyellow; // yellow movement
-      ag = Pg * Ngreen; // green movement
-      tr = Kry * Nred; // red transition
-      ty = Kyg * Nyellow; // yellow transition
-      tg = Kgr * Ngreen; // green transition
+      ar = Mr * Nred; // red movement
+      ay = My * Nyellow; // yellow movement
+      ag = Mg * Ngreen; // green movement
+      tr = Rr * Nred; // red transition
+      ty = Ry * Nyellow; // yellow transition
+      tg = Rg * Ngreen; // green transition
       a0 = ar + ay + ag + tr + ty + tg; // total propensity function
       
       R = R::runif(0,1);
