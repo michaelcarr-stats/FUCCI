@@ -448,21 +448,37 @@ MotilityData <-
     Simulation == 4 & Parameter == "Mr" ~ 5,
     Simulation == 4 & Parameter == "My" ~ 8,
     Simulation == 4 & Parameter == "Mg" ~ 2 
-  )) %>% 
-  mutate(facets = case_when(
-    Simulation == 1 ~ "(a)",
-    Simulation == 2 ~ "(b)",
-    Simulation == 3 ~ "(c)",
-    Simulation == 4 ~ "(d)"
   )) 
-
 
 MotilityData %>% 
   filter(MotilityData == "CellTracking") %>% 
+  mutate(ntrack = as.factor(ntrack)) %>% 
+  mutate(facets = case_when(
+    Simulation == 1 & ntrack == 10 ~ "(a)",
+    Simulation == 1 & ntrack == 20 ~ "(b)",
+    Simulation == 1 & ntrack == 30 ~ "(c)",
+    Simulation == 1 & ntrack == 40 ~ "(d)",
+    Simulation == 1 & ntrack == 50 ~ "(e)",
+    Simulation == 2 & ntrack == 10 ~ "(f)",
+    Simulation == 2 & ntrack == 20 ~ "(g)",
+    Simulation == 2 & ntrack == 30 ~ "(h)",
+    Simulation == 2 & ntrack == 40 ~ "(i)",
+    Simulation == 2 & ntrack == 50 ~ "(j)",
+    Simulation == 3 & ntrack == 10 ~ "(k)",
+    Simulation == 3 & ntrack == 20 ~ "(l)",
+    Simulation == 3 & ntrack == 30 ~ "(m)",
+    Simulation == 3 & ntrack == 40 ~ "(n)",
+    Simulation == 3 & ntrack == 50 ~ "(o)",
+    Simulation == 4 & ntrack == 10 ~ "(p)",
+    Simulation == 4 & ntrack == 20 ~ "(q)",
+    Simulation == 4 & ntrack == 30 ~ "(r)",
+    Simulation == 4 & ntrack == 40 ~ "(s)",
+    Simulation == 4 & ntrack == 50 ~ "(t)"
+  )) %>% 
   ggplot(aes(x = Value, fill = Parameter, linetype = Parameter)) + 
   geom_density(alpha = 0.5, size = 0.75) + 
   geom_vline(aes(xintercept = TrueValue, color = Parameter), linetype='dashed') + 
-  facet_wrap(~facets, nrow = 1) + 
+  facet_wrap(~facets, ncol = 5) + 
   scale_fill_manual(values=c("red", "gold", "green"), labels = c(expression(M[r]),expression(M[y]),expression(M[g]))) + 
   scale_color_manual(values=c("red", "darkgoldenrod3", "green"), labels = c(expression(M[r]),expression(M[y]),expression(M[g]))) +
   scale_linetype_manual(values = c("solid", "dashed", "dotted"), labels = c(expression(M[r]),expression(M[y]),expression(M[g]))) +
@@ -476,10 +492,16 @@ MotilityData %>%
   ) + 
   labs(x = expression("h"^"-1"))
 
-ggsave("Motility_SIM_CellTracking.pdf", width = 9, height = 4, units = "in")
+ggsave("Motility_SIM_CellTracking.pdf", width = 8, height = 8, units = "in")
 
 MotilityData %>% 
   filter(MotilityData == "CellDensity") %>% 
+  mutate(facets = case_when(
+    Simulation == 1 ~ "(a)",
+    Simulation == 2 ~ "(b)",
+    Simulation == 3 ~ "(c)",
+    Simulation == 4 ~ "(d)"
+  )) %>% 
   ggplot(aes(x = Value, fill = Parameter, linetype = Parameter)) + 
   geom_density(alpha = 0.5, size = 0.75) + 
   geom_vline(aes(xintercept = TrueValue, color = Parameter), linetype='dashed') + 
