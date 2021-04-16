@@ -3,6 +3,7 @@ library(tidyverse)
 library(ggpubr)
 
 #set working directory to the directory of this R file
+setwd(dirname(rstudioapi::getActiveDocumentContext()$path))
 
 #load data
 Experiment_CellTracking <- read_excel("../Data/SMCABC returned data/SMCABC_DATA.xlsx", sheet = "Experiment_CellTracking")
