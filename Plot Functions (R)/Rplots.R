@@ -371,8 +371,7 @@ ggarrange(p1,p2, nrow = 2)
 ggsave("SixParameters_SIM_CellDensity.pdf", width = 9, height = 8, units = "in")
 
 #Proliferation Plots
-p1 <- 
-  ProliferationData %>% 
+ProliferationData %>% 
   gather(Parameter,Value,-Simulation) %>% 
   mutate(TrueValue = case_when(
     Simulation == 1 & Parameter == "Rr" ~ 0.04,
@@ -389,10 +388,16 @@ p1 <-
     Simulation == 4 & Parameter == "Rg" ~ 0.28
     )
   ) %>% 
+  mutate(facets = case_when(
+    Simulation == 1 ~ "(a)",
+    Simulation == 2 ~ "(b)",
+    Simulation == 3 ~ "(c)",
+    Simulation == 4 ~ "(d)"
+  )) %>% 
   ggplot(aes(x = Value, fill = Parameter, linetype = Parameter)) + 
   geom_density(alpha = 0.5, size = 0.75) +
   geom_vline(aes(xintercept = TrueValue, color = Parameter), linetype='dashed') + 
-  facet_wrap(~Simulation, nrow = 1) + 
+  facet_wrap(~facets, nrow = 1) + 
   scale_fill_manual(values=c("red", "gold", "green"), labels = c(expression(R[r]),expression(R[y]),expression(R[g]))) + 
   scale_color_manual(values=c("red", "darkgoldenrod3", "green"), labels = c(expression(R[r]),expression(R[y]),expression(R[g]))) +
   scale_linetype_manual(values = c("solid", "dashed", "dotted"), labels = c(expression(R[r]),expression(R[y]),expression(R[g]))) +
@@ -405,7 +410,7 @@ p1 <-
     strip.background = element_blank()
   )
 
-ggsave("Proliferation_SIM.pdf", width = 5, height = 5, units = "in")
+ggsave("Proliferation_SIM.pdf", width = 8, height = 4, units = "in")
 
 
 #Motility Plots 
