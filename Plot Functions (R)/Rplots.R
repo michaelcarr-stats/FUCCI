@@ -31,13 +31,14 @@ Experiment_CellTracking %>%
   mutate(Parameter = factor(Parameter, levels = c("Rr", "Ry", "Rg","Mr", "My", "Mg"))) %>% 
   group_by(Parameter) %>% 
   summarise(
-    mu = signif(mean(Value),3),
-    sd = signif(sd(Value),3),
-    "2.5%" = signif(quantile(Value, 0.025),3),
-    "50%" = signif(quantile(Value, 0.5),3),
-    "97.5%" = signif(quantile(Value, 0.975),3),
-    CV = signif(sd/mu,3)
+    mu = signif(mean(Value), digits=3),
+    sd = signif(sd(Value), digits=3),
+    "2.5%" = signif(quantile(Value, 0.025), digits=3),
+    "50%" = signif(quantile(Value, 0.5), digits=3),
+    "97.5%" = signif(quantile(Value, 0.975), digits=3),
+    CV = signif(sd/mu, digits=3)
   )
+
 
 p1 <- 
   Experiment_CellTracking %>% 
@@ -55,7 +56,7 @@ p1 <-
   geom_density(alpha = 0.5, size = 0.75) +
   facet_wrap(~Type, scale = "free") +
   scale_fill_manual(values = c("Rr" = "red", "Ry" = "gold", "Rg" = "green", "Mr" = "red", "My" = "gold", "Mg" = "green"), labels = c(expression(R[r]),expression(R[y]),expression(R[g])))+ 
-  scale_linetype(labels = c(expression(R[r]),expression(R[y]),expression(R[g]))) +
+  scale_linetype_manual(values = c("solid", "dashed", "dotted"), labels = c(expression(R[r]),expression(R[y]),expression(R[g]))) +
   theme_bw() +
   theme(
     legend.position = "bottom",
@@ -80,7 +81,7 @@ p2 <-
   geom_density(alpha = 0.5, size = 0.75) +
   facet_wrap(~Type, scale = "free") +
   scale_fill_manual(values = c("Rr" = "red", "Ry" = "gold", "Rg" = "green", "Mr" = "red", "My" = "gold", "Mg" = "green"), labels = c(expression(M[r]),expression(M[y]),expression(M[g])))+ 
-  scale_linetype(labels = c(expression(M[r]),expression(M[y]),expression(M[g]))) +
+  scale_linetype_manual(values = c("solid", "dashed", "dotted"), labels = c(expression(M[r]),expression(M[y]),expression(M[g]))) +
   theme_bw() +
   theme(
     legend.position = "bottom",
@@ -113,7 +114,7 @@ p3 <-
   geom_vline(aes(xintercept = TrueVal, color = Parameter), linetype = "dashed") +
   scale_fill_manual(values = c("sx1" = "red", "sx2" = "gold", "sx3" = "green", "sx4" = "red", "sx5" = "gold", "sx6" = "green"), labels = c(expression(S[1]),expression(S[2]),expression(S[3])))+ 
   scale_color_manual(values = c("sx1" = "red", "sx2" = "goldenrod3", "sx3" = "green", "sx4" = "red", "sx5" = "goldenrod3", "sx6" = "green"), labels = c(expression(S[1]),expression(S[2]),expression(S[3])))+ 
-  scale_linetype(labels = c(expression(S[1]),expression(S[2]),expression(S[3]))) +
+  scale_linetype_manual(values = c("solid", "dashed", "dotted"), labels = c(expression(S[1]),expression(S[2]),expression(S[3]))) +
   theme_bw() +
   theme(
     legend.position = "bottom",
@@ -146,7 +147,7 @@ p4 <-
   geom_vline(aes(xintercept = TrueVal, color = Parameter), linetype = "dashed") +
   scale_fill_manual(values = c("sx1" = "red", "sx2" = "gold", "sx3" = "green", "sx4" = "red", "sx5" = "gold", "sx6" = "green"), labels = c(expression(S[4]),expression(S[5]),expression(S[6])))+ 
   scale_color_manual(values = c("sx1" = "red", "sx2" = "goldenrod3", "sx3" = "green", "sx4" = "red", "sx5" = "goldenrod3", "sx6" = "green"), labels = c(expression(S[4]),expression(S[5]),expression(S[6])))+ 
-  scale_linetype(labels = c(expression(S[4]),expression(S[5]),expression(S[6]))) +
+  scale_linetype_manual(values = c("solid", "dashed", "dotted"), labels = c(expression(S[4]),expression(S[5]),expression(S[6]))) + 
   theme_bw() +
   theme(
     legend.position = "bottom",
@@ -175,7 +176,7 @@ p1 <-
   geom_density(alpha = 0.5, size = 0.75) +
   facet_wrap(~Type, scale = "free") +
   scale_fill_manual(values = c("Rr" = "red", "Ry" = "gold", "Rg" = "green", "Mr" = "red", "My" = "gold", "Mg" = "green"), labels = c(expression(R[r]),expression(R[y]),expression(R[g])))+ 
-  scale_linetype(labels = c(expression(R[r]),expression(R[y]),expression(R[g]))) +
+  scale_linetype_manual(values = c("solid", "dashed", "dotted"), labels = c(expression(R[r]),expression(R[y]),expression(R[g]))) +
   theme_bw() +
   theme(
     legend.position = "bottom",
@@ -200,7 +201,7 @@ p2 <-
   geom_density(alpha = 0.5, size = 0.75) +
   facet_wrap(~Type, scale = "free") +
   scale_fill_manual(values = c("Rr" = "red", "Ry" = "gold", "Rg" = "green", "Mr" = "red", "My" = "gold", "Mg" = "green"), labels = c(expression(M[r]),expression(M[y]),expression(M[g])))+ 
-  scale_linetype(labels = c(expression(M[r]),expression(M[y]),expression(M[g]))) +
+  scale_linetype_manual(values = c("solid", "dashed", "dotted"), labels = c(expression(M[r]),expression(M[y]),expression(M[g]))) +
   theme_bw() +
   theme(
     legend.position = "bottom",
@@ -256,11 +257,13 @@ SixParameterData_CellTracking <-
 p1 <-
   SixParameterData_CellTracking %>%
   filter(Parameter_type == "Transition") %>% 
-  ggplot(aes(x = Value, fill = Parameter)) + 
-  geom_density(alpha = .3) + 
+  ggplot(aes(x = Value, fill = Parameter, linetype = Parameter)) + 
+  geom_density(alpha = 0.5, size = 0.75) + 
+  geom_vline(aes(xintercept = TrueValue, color = Parameter), linetype = "dashed") +
   facet_wrap(~facets, nrow = 1) + 
   scale_fill_manual(values=c("red", "gold", "green"), labels = c(expression(R[r]),expression(R[y]),expression(R[g]))) + 
   scale_color_manual(values=c("red", "darkgoldenrod3", "green"), labels = c(expression(R[r]),expression(R[y]),expression(R[g])))+ 
+  scale_linetype_manual(values = c("solid", "dashed", "dotted"), labels = c(expression(R[r]),expression(R[y]),expression(R[g]))) +
   theme_bw() +
   theme(
     legend.title = element_blank(),
@@ -269,16 +272,19 @@ p1 <-
     strip.text.y = element_blank(),
     strip.background = element_blank()
   ) + 
-  xlim(0,0.4)
+  xlim(0,0.4) +
+  labs(x = expression("h"^"-1"))
 
 p2 <- 
   SixParameterData_CellTracking %>%
   filter(Parameter_type == "Motility")  %>% 
-  ggplot(aes(x = Value, fill = Parameter)) + 
-  geom_density(alpha = .3) + 
-  facet_wrap(~Simulation, nrow = 1) + 
+  ggplot(aes(x = Value, fill = Parameter, linetype = Parameter)) + 
+  geom_density(alpha = 0.5, size = 0.75) + 
+  geom_vline(aes(xintercept = TrueValue, color = Parameter), linetype = "dashed") +
+  facet_wrap(~facets, nrow = 1) + 
   scale_fill_manual(values=c("red", "gold", "green"), labels = c(expression(M[r]),expression(M[y]),expression(M[g]))) + 
   scale_color_manual(values=c("red", "darkgoldenrod3", "green"), labels = c(expression(M[r]),expression(M[y]),expression(M[g]))) +  
+  scale_linetype_manual(values = c("solid", "dashed", "dotted"), labels = c(expression(M[r]),expression(M[y]),expression(M[g]))) +
   theme_bw() +
   theme(
     legend.title = element_blank(),
@@ -286,8 +292,10 @@ p2 <-
     strip.text.x = element_text(angle = 0, hjust = 0),
     strip.text.y = element_blank(),
     strip.background = element_blank()
-  )
-ggarrange(p1,p2, nrow = 2)
+  ) +
+  labs(x = expression("h"^"-1"))
+       
+ggarrange(p1,p2, nrow = 2) 
 
 ggsave("SixParameters_SIM_CellTracking.pdf", width = 9, height = 8, units = "in")
 
@@ -335,11 +343,13 @@ SixParameterData_CellDensity <-
 p1 <-
   SixParameterData_CellDensity %>%
   filter(Parameter_type == "Transition") %>% 
-  ggplot(aes(x = Value, fill = Parameter)) + 
-  geom_density(alpha = .3) + 
+  ggplot(aes(x = Value, fill = Parameter, linetype = Parameter)) + 
+  geom_density(alpha = 0.5, size = 0.75) + 
+  geom_vline(aes(xintercept = TrueValue, color = Parameter), linetype = "dashed") +
   facet_wrap(~facets, nrow = 1) + 
   scale_fill_manual(values=c("red", "gold", "green"), labels = c(expression(R[r]),expression(R[y]),expression(R[g]))) + 
   scale_color_manual(values=c("red", "darkgoldenrod3", "green"), labels = c(expression(R[r]),expression(R[y]),expression(R[g])))+ 
+  scale_linetype_manual(values = c("solid", "dashed", "dotted"), labels = c(expression(R[r]),expression(R[y]),expression(R[g]))) +
   theme_bw() +
   theme(
     legend.title = element_blank(),
@@ -348,16 +358,19 @@ p1 <-
     strip.text.y = element_blank(),
     strip.background = element_blank()
   ) + 
-  xlim(0,0.25)
+  xlim(0,0.25) + 
+  labs(x = expression("h"^"-1"))
 
 p2 <- 
-  SixParameterData %>%
+  SixParameterData_CellDensity %>%
   filter(Parameter_type == "Motility")  %>% 
-  ggplot(aes(x = Value, fill = Parameter)) + 
-  geom_density(alpha = .3) + 
-  facet_wrap(~Simulation, nrow = 1) + 
+  ggplot(aes(x = Value, fill = Parameter, linetype = Parameter)) + 
+  geom_density(alpha = 0.5, size = 0.75) + 
+  geom_vline(aes(xintercept = TrueValue, color = Parameter), linetype = "dashed") +
+  facet_wrap(~facets, nrow = 1) + 
   scale_fill_manual(values=c("red", "gold", "green"), labels = c(expression(M[r]),expression(M[y]),expression(M[g]))) + 
   scale_color_manual(values=c("red", "darkgoldenrod3", "green"), labels = c(expression(M[r]),expression(M[y]),expression(M[g]))) +  
+  scale_linetype_manual(values = c("solid", "dashed", "dotted"), labels = c(expression(M[r]),expression(M[y]),expression(M[g]))) +
   theme_bw() +
   theme(
     legend.title = element_blank(),
@@ -365,7 +378,9 @@ p2 <-
     strip.text.x = element_text(angle = 0, hjust = 0),
     strip.text.y = element_blank(),
     strip.background = element_blank()
-  )
+  ) + 
+  labs(x = expression("h"^"-1"))
+
 ggarrange(p1,p2, nrow = 2)
 
 ggsave("SixParameters_SIM_CellDensity.pdf", width = 9, height = 8, units = "in")
@@ -408,7 +423,8 @@ ProliferationData %>%
     strip.text.x = element_text(angle = 0, hjust = 0),
     strip.text.y = element_blank(),
     strip.background = element_blank()
-  )
+  ) + 
+  labs(x = expression("h"^"-1"))
 
 ggsave("Proliferation_SIM.pdf", width = 8, height = 4, units = "in")
 
@@ -456,7 +472,8 @@ MotilityData %>%
     strip.text.x = element_text(angle = 0, hjust = 0),
     strip.text.y = element_blank(),
     strip.background = element_blank()
-  )
+  ) + 
+  labs(x = expression("h"^"-1"))
 
 ggsave("Motility_SIM_CellTracking.pdf", width = 9, height = 4, units = "in")
 
@@ -476,7 +493,8 @@ MotilityData %>%
     strip.text.x = element_text(angle = 0, hjust = 0),
     strip.text.y = element_blank(),
     strip.background = element_blank()
-  )
+  ) + 
+  labs(x = expression("h"^"-1"))
 
 ggsave("Motility_SIM_CellDensity.pdf", width = 9, height = 4, units = "in")
 
@@ -510,7 +528,7 @@ CellTracking %>%
     ntrack == 19 ~ "(s)",
     ntrack == 20 ~ "(t)")) %>% 
   ggplot(aes(x = x, y = y)) +
-  geom_point(aes(color = as.factor(color), shape = as.factor(color))) +
+  geom_point(aes(color = as.factor(color), shape = as.factor(color)), size = 2) +
   geom_path(color = "black") +
   facet_wrap(~facets, scale = "free", nrow = 5) +
   labs(x = expression(paste("x ",mu,"m")), y = expression(paste("y ",mu,"m"))) +
@@ -534,7 +552,7 @@ CellTracking %>%
   ) %>%  
   filter(ntrack %in% c(1,12,11,15,2,9,16,18,3,17,5,14,19)) %>% 
   ggplot(aes(x = x, y = y, group = ntrack)) +
-  geom_point(aes(color = as.factor(color), shape = as.factor(color))) +
+  geom_point(aes(color = as.factor(color), shape = as.factor(color)), size = 2) +
   geom_path(color = "black") +
   labs(x = "", y = "") +
   theme_bw() + 
