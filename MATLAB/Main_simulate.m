@@ -21,12 +21,12 @@
     NstartGreen = s.NstartGreen;
     
     %model parameters
-    Pr = theta_prop(4); % migration rate of red per time unit
-    Py = theta_prop(5); % migration rate of yellow per time unit
-    Pg = theta_prop(6); % migration rate of green per time unit
-    Kry = theta_prop(1); % transition rate of red to yellow per time unit
-    Kyg = theta_prop(2); % transition rate of yellow to green per time  unit
-    Kgr = theta_prop(3); % transition rate of green to red per time unit
+    Rr = theta_prop(1); % transition rate of red to yellow per time unit
+    Ry = theta_prop(2); % transition rate of yellow to green per time  unit
+    Rg = theta_prop(3); % transition rate of green to red per time unit
+    Mr = theta_prop(4); % migration rate of red per time unit
+    My = theta_prop(5); % migration rate of yellow per time unit
+    Mg = theta_prop(6); % migration rate of green per time unit
     
     
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -64,12 +64,12 @@
             
             
             % calculate total propensity function
-            ar = Pr * Nred; % red movement
-            ay = Py * Nyellow; % yellow movement
-            ag = Pg * Ngreen; % green movement
-            tr = Kry * Nred; % transition red to yellow
-            ty = Kyg * Nyellow; % transition yellow to green
-            tg = Kgr * Ngreen; % transition green to red
+            ar = Mr * Nred; % red movement
+            ay = My * Nyellow; % yellow movement
+            ag = Mg * Ngreen; % green movement
+            tr = Rr * Nred; % transition red to yellow
+            ty = Ry * Nyellow; % transition yellow to green
+            tg = Rg * Ngreen; % transition green to red
             a0 = ar + ay + ag + tr + ty + tg; % total propensity function
 
             % calculate new time step
