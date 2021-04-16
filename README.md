@@ -1,7 +1,7 @@
 This repository is the culmination of the work done in Carr et al. (2021). In `Data` you will find the 
 data used in this project from raw to processed. In `R` and `MATLAB` you will find the code used to 
 simulate the collective cell spreading experiment from the Simpson et al. (2018) model, the 
-Sequential Monte Carlo Approximate Bayesian Computation (SMC-ABC) algorithms used to estimate the 
+Sequential Monte Carlo Approximate Bayesian Computation (SMC-ABC) algorithm used to estimate the 
 parameter configurations, and any other helper function in the respective languages. In `Plot Function (R)` 
 you will find the `R` script used to produce the figures in Carr et al. (2021). 
 alorithms
