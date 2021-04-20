@@ -33,9 +33,9 @@ function SMC_ABC
     CellTracking = true; %TRUE - if using cell trajectory data; FALSE - if using cell density data
     
     %load data
-    InitPosData = readmatrix("FUCCI_proccessed.xlsx", "sheet","InitPos");
-    FinalPosData = readmatrix("FUCCI_proccessed.xlsx", "sheet","FinalPos");
-    CellTrackingData = readmatrix("FUCCI_proccessed.xlsx", "sheet","CellTracking");
+    InitPosData = readmatrix("../Data/DataProcessing/FUCCI_processed.xlsx", "sheet","InitPos");
+    FinalPosData = readmatrix("../Data/DataProcessing/FUCCI_processed.xlsx", "sheet","FinalPos");
+    CellTrackingData = readmatrix("../Data/DataProcessing/FUCCI_processed.xlsx", "sheet","CellTracking");
     ntrack = max(CellTrackingData(:,4));
     
     Xmax = 1309.09; %Length of the domain
