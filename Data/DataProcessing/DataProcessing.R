@@ -3,6 +3,10 @@ library(dplyr)
 library(readxl)
 library(writexl)
 library(magick)
+library(RSAGA)
+
+#set working directory to the directory of this R file
+setwd(dirname(rstudioapi::getActiveDocumentContext()$path))
 
 N <- 110 #number of images
 
@@ -25,7 +29,7 @@ for (i in 1:N) {
   }
   
   #read image
-  img <- image_read(paste0("../Data/scene00",num,".png")) #read image from parent folder (Data)
+  img <- image_read(paste0("../Raw Data/scene00",num,".png")) #read image from parent folder (Data)
   img_df <- grid.to.xyz(as.matrix(as.raster(img)))
   img_df <- img_df %>% filter(z != "#000000ff") #remove black background
   
@@ -52,16 +56,16 @@ for (i in 1:N) {
 }
 
 FUCCI_Data <- img_df2
-InitPos <- read_excel("../Data/FUCCI_DATA_ImageJ.xlsx", sheet = "InitPos")  #read ImageJ data from parent folder (Data)
-FinalPos <- read_excel("../Data/FUCCI_DATA_ImageJ.xlsx", sheet = "FinalPos")  #read ImageJ data from parent folder (Data)
-CellTracking <- read_excel("../Data/FUCCI_DATA_ImageJ.xlsx", sheet = "CellTracking")  #read ImageJ data from parent folder (Data)
+InitPos <- read_excel("../Raw Data/FUCCI_DATA_ImageJ.xlsx", sheet = "InitPos")  #read ImageJ data from parent folder (Data)
+FinalPos <- read_excel("../Raw Data/FUCCI_DATA_ImageJ.xlsx", sheet = "FinalPos")  #read ImageJ data from parent folder (Data)
+CellTracking <- read_excel("../Raw Data/FUCCI_DATA_ImageJ.xlsx", sheet = "CellTracking")  #read ImageJ data from parent folder (Data)
 
 InitPos_color <- 
   InitPos %>% 
   as_tibble() %>% 
   mutate(frame = 1) %>% 
   mutate(x = round(x), y = round(y)) %>% 
-  left_join(.,FUCCI_DATA, by = c("x", "y", "frame")) %>% 
+  left_join(.,FUCCI_Data, by = c("x", "y", "frame")) %>% 
   select(x,y, color) %>% 
   filter(!is.na(color)) #remove unidentified cells
 
@@ -70,7 +74,7 @@ FinalPos_color <-
   as_tibble() %>% 
   mutate(frame = 110) %>% 
   mutate(x = round(x), y = round(y)) %>% 
-  left_join(.,FUCCI_DATA, by = c("x", "y", "frame")) %>% 
+  left_join(.,FUCCI_Data, by = c("x", "y", "frame")) %>% 
   select(x,y, color) %>% 
   filter(!is.na(color)) #remove unidentified cells 
 
@@ -78,7 +82,7 @@ CellTracking_color <-
   CellTracking %>% 
   as_tibble() %>% 
   mutate(x = round(x), y = round(y)) %>% 
-  left_join(.,FUCCI_DATA, by = c("x", "y", "frame")) %>% 
+  left_join(.,FUCCI_Data, by = c("x", "y", "frame")) %>% 
   select(x,y, color, ntrack, frame) 
 
 ## cleaning data
