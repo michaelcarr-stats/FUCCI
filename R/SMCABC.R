@@ -1,10 +1,13 @@
+#set working directory to the directory of this R file
+setwd(dirname(rstudioapi::getActiveDocumentContext()$path))
+
 #load packages
 library(Rcpp)
 library(RcppArmadillo)
 library(readxl)
+library(ggplot2)
 library(dplyr)
 library(tidyr)
-library(ggplot2)
 library(foreach)
 library(MASS)
 library(pracma)
@@ -31,9 +34,9 @@ set.seed(1234)
 CellTracking = TRUE #TRUE - if using cell trajectory data; FALSE - if using cell density data
 
 #load data
-InitPos <- read_excel("FUCCI_proccessed.xlsx", sheet = "InitPos")
-FinalPos <- read_excel("FUCCI_proccessed.xlsx", sheet = "FinalPos")
-CellTrackingData <- read_excel("FUCCI_proccessed.xlsx", sheet = "CellTracking")
+InitPos <- read_excel("../Data/DataProcessing/FUCCI_processed.xlsx", sheet = "InitPos")
+FinalPos <- read_excel("../Data/DataProcessing/FUCCI_processed.xlsx", sheet = "FinalPos")
+CellTrackingData <- read_excel("../Data/DataProcessing/FUCCI_processed.xlsx", sheet = "CellTracking")
 Ntrack <- length(unique(CellTrackingData$ntrack))
 
 Xmax <- 1309.09 #image width
