@@ -8,4 +8,5 @@ data collected and processed from the experimental images using ImageJ.
 # References
 
 Carr, M. J., Simpson, M. J. & Drovandi, C. (2021). Estimating parameters of a stochastic cell invasion model with 
-fluorescent cell cycle labelling using Approximate Bayesian Computation
+fluorescent cell cycle labelling using Approximate Bayesian Computation. bioarXiv, doi: 
+https://doi.org/10.1101/2021.04.20.440712
