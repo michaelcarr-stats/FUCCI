@@ -89,12 +89,12 @@ including FUCCIGillespie with built in functionality to handle already installed
 # References
 
 Carr, M. J., Simpson, M. J. & Drovandi, C. (2021). Estimating parameters of a stochastic cell invasion model with
-fluorescent cell cycle labelling using Approximate Bayesian
-Computation
+fluorescent cell cycle labelling using Approximate Bayesian Computation. bioarXiv, doi: 
+https://doi.org/10.1101/2021.04.20.440712
 
 Drovandi, C. C. & Pettitt, A. N. (2011). Estimation of parameters for macroparasite population evolution usingapproximate
-bayesian computation.Biometrics,67(1), 225–233.
+bayesian computation. Biometrics,67(1), 225–233.
 
 Simpson,  M.  J.,  Jin,  W.,  Vittadello,  S.  T.,  Tambyah,  T.  A.,  Ryan,  J.  M.,  Gunasingh,  G.,  Haass,  N.  K.  
-& McCue, S. W. (2018). Stochastic models of cell invasion with fluorescent cell cycle indicators.PhysicaA: Statistical 
-Mechanics and its Applications,510, 375–386.
+& McCue, S. W. (2018). Stochastic models of cell invasion with fluorescent cell cycle indicators. PhysicaA: Statistical 
+Mechanics and its Applications, 510, 375–386.
