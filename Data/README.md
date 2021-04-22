@@ -41,7 +41,8 @@ and MotilityData idicates if cell density or cell tracking data was used.
 # References
 
 Carr, M. J., Simpson, M. J. & Drovandi, C. (2021). Estimating parameters of a stochastic cell invasion model with fluorescent cell 
-cycle labelling using Approximate Bayesian Computation
+cycle labelling using Approximate Bayesian Computation. bioarXiv, doi: 
+https://doi.org/10.1101/2021.04.20.440712
 
 Vittadello, S. T., McCue, S. W., Gunasingh, G., Haass, N. K. & Simpson, M. J. (2018). Mathematical modelsfor cell 
-migration with real-time cell cycle dynamics.Biophysical Journal,114(5), 1241–1253.
+migration with real-time cell cycle dynamics. Biophysical Journal, 114(5), 1241–1253.
