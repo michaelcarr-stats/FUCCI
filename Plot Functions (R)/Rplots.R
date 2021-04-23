@@ -427,7 +427,7 @@ ProliferationData %>%
   ) + 
   labs(x = expression("h"^"-1"))
 
-ggsave("Proliferation_SIM.pdf", width = 8, height = 4, units = "in")
+ggsave("Proliferation_SIM.pdf", width = 9, height = 4, units = "in")
 
 
 #Motility Plots 
