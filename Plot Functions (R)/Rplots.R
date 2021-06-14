@@ -155,7 +155,7 @@ p4 <-
     legend.title = element_blank(),
     strip.text.x = element_blank()
   ) + 
-  labs(x = "cells", title = "(c)")
+  labs(x = "cells", title = "(d)")
 
 ggarrange(p1,p2,p3,p4, nrow = 1)
 ggsave("ExperimentResults_CellTracking.pdf", width = 9, height = 4, units = "in")
