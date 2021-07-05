@@ -5,7 +5,7 @@ indicators using the Gillespie Algorithm. See Simpson et al. (2018) for modellin
 
 ### How to install
 1. In `R` make sure `devtools` is installed. Install with `install.packages("devtools")`.
-2. Run `devtools::install_github(""michaelcarr-stats/FUCCI/R/FUCCIGillespie"")`
+2. Run `devtools::install_github("michaelcarr-stats/FUCCI/R/FUCCIGillespie")`
 
 # SMCABC
 
