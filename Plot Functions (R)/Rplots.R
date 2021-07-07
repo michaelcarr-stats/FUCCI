@@ -274,6 +274,7 @@ p1 <-
     strip.background = element_blank()
   ) + 
   xlim(0,0.4) +
+  ylim(0,300) + 
   labs(x = expression("h"^"-1"))
 
 p2 <- 
@@ -294,6 +295,7 @@ p2 <-
     strip.text.y = element_blank(),
     strip.background = element_blank()
   ) +
+  ylim(0,2.5) +
   labs(x = expression("h"^"-1"))
        
 ggarrange(p1,p2, nrow = 2) 
@@ -360,6 +362,7 @@ p1 <-
     strip.background = element_blank()
   ) + 
   xlim(0,0.25) + 
+  ylim(0,300) +
   labs(x = expression("h"^"-1"))
 
 p2 <- 
@@ -380,6 +383,7 @@ p2 <-
     strip.text.y = element_blank(),
     strip.background = element_blank()
   ) + 
+  ylim(0,2.5) +
   labs(x = expression("h"^"-1"))
 
 ggarrange(p1,p2, nrow = 2)
