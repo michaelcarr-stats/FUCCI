@@ -5,7 +5,7 @@ Simpson et al. (2018) model, the Sequential Monte Carlo Approximate Bayesian Com
 algorithm used to estimate the model parameters, and any other helper functions. In `Plot Functions (R)` 
 you will find the `R` script used to produce the figures in Carr et al. (2021). Finally, in 
 `Computational Efficiency (R)` you will find an `R` script which computes the computational
-cost of simulating the model. 
+cost of simulating the `Rcpp` version of the model. 
 
 # References
 
